@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Configuration
 
-Things you may want to cover:
+Set the configuration you want in `config/application.rb`:
 
-* Ruby version
+* `gh_token`: GitHub authorization token
+* `gh_repo`: GitHub repository
 
-* System dependencies
+### Testing
 
-* Configuration
+As for now, feature set is limited, but you can hit the following endpoint:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* `/`: List all the closed Pull-Requests on the repository
+* `/github/create`: Create a Pull-Request under the `gh_repo`
