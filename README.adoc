@@ -1,3 +1,0 @@
-== Confs Tech API
-
-TODO
