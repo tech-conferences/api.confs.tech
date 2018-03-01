@@ -1,27 +1,29 @@
 class Conference
-  CONFERENCE_ATTRIBUTES =
+  include ActiveModel::Model
+
+  attr_accessor(
     :name,
     :url,
-    :start_date,
-    :end_date,
+    :startDate,
+    :endDate,
     :city,
     :country,
+    :cfpStartDate,
     :cfpEndDate,
     :cfpUrl,
-    :type
+    :cfpStart,
+    :type,
+    :language,
+    :size,
+    :speakers,
+    :twitter,
+    :facebook
+  )
 
-  attr_accessor(*CONFERENCE_ATTRIBUTES)
-
-  def initialize(*conference)
-    conference.map do |key, value|
-      underscored_key = key.to_s.underscore
-      return unless CONFERENCE_ATTRIBUTES.include? underscored_key.to_sym
-      self.send "#{underscored_key}=", value
-    end
-  end
+  validates :name, :url, :startDate, presence: true
 
   def id
-    "#{url}-#{start_date}"
+    Digest::SHA1.base64digest "#{url}-#{startDate}"
   end
 
   def as_json
