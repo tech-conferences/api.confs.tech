@@ -6,4 +6,9 @@ class GithubControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "post a PR" do
+    post github_create_url
+    assert_response :success
+  end
+
 end

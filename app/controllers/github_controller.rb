@@ -12,6 +12,8 @@ class GithubController < ApplicationController
     head = params[:head]
     title = params[:title]
 
+    commit = gh_wrapper.create_commit
+
     result = gh_wrapper.create_pull_request(head, title)
 
     render json: result
