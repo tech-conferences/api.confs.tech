@@ -10,3 +10,9 @@ development:
   database: api_confs_tech_development
   username: postgres
   password: password
+
+test:
+  <<: *default
+  database: api_confs_tech_test
+  username: postgres
+  password: password

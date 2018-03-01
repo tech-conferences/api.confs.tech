@@ -16,9 +16,12 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+*swp
+*swo
 
 .byebug_history
 
 # Ignore encrypted secrets key file.
 config/secrets.yml.key
 config/secrets.yml
+.DS_Store
