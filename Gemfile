@@ -10,6 +10,9 @@ gem 'puma', '~> 3.7'
 gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
+# gem 'bcrypt', '~> 3.1.7'
+# Ruby toolkit for the GitHub API
+gem "octokit", "~> 4.0"
 
 # API
 gem 'faraday'
