@@ -40,6 +40,9 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    algoliasearch (1.19.1)
+      httpclient (~> 2.8.3)
+      json (>= 1.5.1)
     arel (8.0.0)
     builder (3.2.3)
     byebug (10.0.0)
@@ -51,8 +54,10 @@ GEM
     ffi (1.9.21)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    httpclient (2.8.3)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
+    json (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -132,6 +137,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  algoliasearch
   byebug
   listen (>= 3.0.5, < 3.2)
   octokit (~> 4.0)
