@@ -7,23 +7,23 @@ module Github
 
     def execute
       (start_year..end_year).map do |year|
-        CONF_TYPES.map do |type|
-          response = Faraday.get "#{type == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{type}.json"
+        CONF_TYPES.map do |topic|
+          response = Faraday.get "#{topic == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{topic}.json"
 
           if response.success?
-            handle_success(JSON.parse(response.body), type)
+            handle_success(JSON.parse(response.body), topic)
           else
             handle_error
           end
         end
-      end.flatten.uniq
+      end.flatten.compact
     end
 
     private
 
-    def handle_success(conferences, type)
+    def handle_success(conferences, topic)
       conferences.map do |details|
-        Conference.new(details)
+        Conference.new(details.merge(topics: [topic]))
       end
     end
 

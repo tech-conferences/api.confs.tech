@@ -12,8 +12,8 @@ class Conference
     :cfpEndDate,
     :cfpUrl,
     :cfpStart,
-    :type,
-    :language,
+    :topics,
+    :languages,
     :size,
     :speakers,
     :twitter,
@@ -26,8 +26,8 @@ class Conference
     Digest::SHA1.base64digest "#{url}-#{startDate}"
   end
 
-  def as_json
-    super.merge(
+  def as_json(*args)
+    super(*args).merge(
       objectID: id
     )
   end
