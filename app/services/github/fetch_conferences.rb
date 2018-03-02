@@ -3,27 +3,32 @@ module Github
     DEFAULT_URL = 'https://raw.githubusercontent.com/tech-conferences/confs.tech/master/conferences'
     JS_URL      = 'https://raw.githubusercontent.com/tech-conferences/javascript-conferences/master/conferences'
 
-    CONF_TYPES = %w[javascript css php ux ruby ios android general].freeze
+    CONF_TOPICS = %w[javascript css php ux ruby ios android general].freeze
+
+    def results
+      @results ||= {}
+    end
 
     def execute
       (start_year..end_year).map do |year|
-        CONF_TYPES.map do |topic|
+        CONF_TOPICS.map do |topic|
           response = Faraday.get "#{topic == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{topic}.json"
-
-          if response.success?
-            handle_success(JSON.parse(response.body), topic)
-          else
-            handle_error
-          end
+          response.success? ? handle_success(response, topic) : handle_error
         end
-      end.flatten.compact
+      end
+      results.values
     end
 
     private
 
-    def handle_success(conferences, topic)
-      conferences.map do |details|
-        Conference.new(details.merge(topics: [topic]))
+    def handle_success(response, topic)
+      JSON.parse(response.body).map do |details|
+        id = Digest::SHA1.base64digest "#{URI.parse(details['url']).host}-#{details['startDate']}"
+        if results[id]
+          results[id].topics |= [topic]
+        else
+          results[id] = Conference.new(details.merge(id: id, topics: [topic]))
+        end
       end
     end
 

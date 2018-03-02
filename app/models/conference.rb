@@ -2,6 +2,7 @@ class Conference
   include ActiveModel::Model
 
   attr_accessor(
+    :id,
     :name,
     :url,
     :startDate,
@@ -27,12 +28,8 @@ class Conference
     Date.parse(startDate.length == 10 ? startDate : "#{startDate}-01").to_time.to_i
   end
 
-  def id
-    Digest::SHA1.base64digest "#{url}-#{startDate}"
-  end
-
   def as_json(*args)
-    super(*args).merge(
+    super(*args).except(:id).merge(
       objectID: id,
       date: date,
     )
