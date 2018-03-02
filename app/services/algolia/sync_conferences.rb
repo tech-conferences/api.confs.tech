@@ -12,10 +12,7 @@ module Algolia
     private
 
     def algolia
-      @@algolia ||= begin
-        Algolia.init(application_id: APPLICATION_ID, api_key: API_KEY)
-        Algolia::Index.new('conferences')
-      end
+      @@algolia ||= Algolia::Index.new('conferences')
     end
   end
 end
