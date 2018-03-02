@@ -24,11 +24,7 @@ class Conference
 
   def date
     return 0 unless startDate
-    if startDate.length == 10
-      Date.parse(startDate).to_time.to_i
-    else
-      Date.parse("#{startDate}-01").to_time.to_i
-    end
+    Date.parse(startDate.length == 10 ? startDate : "#{startDate}-01").to_time.to_i
   end
 
   def id
