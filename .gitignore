@@ -18,4 +18,6 @@
 !/tmp/.keep
 
 .byebug_history
-Gemfile.lock
+
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
