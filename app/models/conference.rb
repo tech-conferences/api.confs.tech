@@ -37,7 +37,7 @@ class Conference
 
   def as_json(*args)
     super(*args).merge(
-      objectID: id
+      objectID: id,
       date: date,
     )
   end
