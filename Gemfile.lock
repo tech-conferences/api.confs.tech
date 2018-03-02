@@ -42,6 +42,7 @@ GEM
       httpclient (~> 2.8.3)
       json (>= 1.5.1)
     arel (8.0.0)
+    bcrypt (3.1.11)
     builder (3.2.3)
     byebug (10.0.0)
     chronic (0.10.2)
@@ -57,7 +58,10 @@ GEM
     httpclient (2.8.3)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
+<<<<<<< HEAD
     json (2.1.0)
+=======
+>>>>>>> Handle better the commit on github API
     jwt (2.1.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -116,6 +120,12 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     ruby_dep (1.5.0)
+<<<<<<< HEAD
+=======
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
+>>>>>>> Handle better the commit on github API
     simple_command (0.0.9)
     spring (2.0.2)
       activesupport (>= 4.2)
@@ -129,6 +139,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sqlite3 (1.3.13)
     thor (0.20.0)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
@@ -145,6 +156,7 @@ DEPENDENCIES
   byebug
   chronic
   faraday
+  bcrypt (~> 3.1.7)
   jwt
   listen (>= 3.0.5, < 3.2)
   pry-byebug
@@ -154,6 +166,7 @@ DEPENDENCIES
   simple_command
   spring
   spring-watcher-listen (~> 2.0.0)
+  sqlite3
   tzinfo-data
 
 BUNDLED WITH

@@ -1,8 +1,6 @@
 class GithubWrapper
 
-  attr_writer(:repository, :base, :client)
-
-  filename = "https://raw.githubusercontent.com/nimzco/confs.tech/master/conferences/2018/ruby.json".freeze
+  attr_accessor(:repository, :base, :client)
 
   def initialize(base = 'master')
     @repository = Rails.configuration.gh_repo
@@ -16,41 +14,40 @@ class GithubWrapper
              data: pull_request }
   end
 
-  def create_commit
-    path = 'conferences/2018/ruby.json'
-    branch = 'add-ruby-conference-2018'
-    file = @client.contents(@repository, path: path, query: {ref: 'master'})
-    enc = file[:content]
-    plain = JSON.parse(Base64.decode64(enc)) << hash_to_submit
+  def create_commit(message, path, sha, content, branch)
+    create_branch(branch)
+
     commit = @client.update_contents(
       @repository, 
       path, 
-      "Adding new Ruby conference in 2018", 
-      file[:sha], 
-      JSON.pretty_generate(plain), 
+      message,
+      sha, 
+      content,
       :branch => branch)
     commit
   end
 
+  def create_branch(branch)
+    @client.create_ref(@repository, "heads/#{branch}", "0b4af9d05c4a1b6d43afd6e14054b61f18d4e8a1")
+  end
+
+  def pull_from_repo(path)
+    file = @client.contents(@repository, path: path, query: {ref: @base})
+    file
+  end
+
+  def update(encoded, content)
+    json = Base64.decode64(encoded)
+    hash = JSON.parse(json)
+    #hash.merge!content
+    hash << content
+    JSON.pretty_generate(hash)
+  end
+    
   def list(state='closed')
     pull_requests = @client.pull_requests(@repository, :state => state)
     return { status: @client.last_response.status,
              data: pull_requests }
-  end
-
-  private
-
-  def hash_to_submit
-    h = {
-      "name": "Ruby on Ice",
-      "url": "https://rubyonice.com/",
-      "startDate": "2018-01-26",
-      "endDate": "2018-01-28",
-      "city": "Tegernsee",
-      "country": "Germany",
-      "twitter": "@rubyoniceconf"
-    }
-    h
   end
 
 end
