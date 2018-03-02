@@ -11,6 +11,10 @@ gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
 
+# database
+gem 'sqlite3', group: :development
+gem 'pg', group: :production
+
 # API
 gem 'faraday'
 
@@ -19,7 +23,7 @@ gem 'faraday'
 #
 # JWT; Token-based authentication
 gem 'jwt'
-gem 'sqlite3'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
