@@ -12,8 +12,12 @@ module Github
     def execute
       (start_year..end_year).map do |year|
         CONF_TOPICS.map do |topic|
-          response = Faraday.get "#{topic == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{topic}.json"
-          response.success? ? handle_success(response, topic) : handle_error
+          begin
+            response = Faraday.get "#{topic == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{topic}.json"
+            response.success? ? handle_success(response, topic) : handle_error
+          rescue => e
+            # TODO: send email to Nima that entry has an invalid key
+          end
         end
       end
       results.values
@@ -37,11 +41,11 @@ module Github
     end
 
     def start_year
-      Date.current.year
+      Date.current.year - 1
     end
 
     def end_year
-      start_year + 1
+      Date.current.year + 1
     end
   end
 end

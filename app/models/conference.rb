@@ -1,18 +1,16 @@
 class Conference
   include ActiveModel::Model
+  include DateConcern
 
   attr_accessor(
     :id,
     :name,
     :url,
-    :startDate,
-    :endDate,
     :city,
     :country,
     :cfpStartDate,
     :cfpEndDate,
     :cfpUrl,
-    :cfpStart,
     :topics,
     :languages,
     :size,
@@ -21,23 +19,20 @@ class Conference
     :facebook
   )
 
+  date_accessor(
+    :startDate,
+    :endDate,
+    :cfpStart,
+    :cfpEnd,
+  )
+
   validates :name, :url, :startDate, presence: true
 
-  def date
-    return 0 unless startDate
-    Date.parse(startDate.length == 10 ? startDate : "#{startDate}-01").to_time.to_i
-  end
-
-  def cfpDate
-    return 0 unless cfpEndDate
-    Date.parse(cfpEndDate.length == 10 ? cfpEndDate : "#{cfpEndDate}-01").to_time.to_i
-  end
+  #legacy mapping support
+  def date=(value); self.startDate = value; end
+  def cfpDate=(value); self.cfpStart = value; end
 
   def as_json(*args)
-    super(*args).except(:id).merge(
-      objectID: id,
-      date: date,
-      cfpDate: cfpDate,
-    )
+    super(*args).except(:id).merge(objectID: id)
   end
 end
