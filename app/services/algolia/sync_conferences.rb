@@ -16,7 +16,7 @@ module Algolia
     end
 
     def index_name
-      Rails.env.production ? 'prod_conferences' : 'dev_conferences'
+      Rails.env.production? ? 'prod_conferences' : 'dev_conferences'
     end
   end
 end
