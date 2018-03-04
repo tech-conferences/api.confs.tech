@@ -12,7 +12,11 @@ module Algolia
     private
 
     def algolia
-      @@algolia ||= Algolia::Index.new('conferences')
+      @@algolia ||= Algolia::Index.new(index_name)
+    end
+
+    def index_name
+      Rails.env.production ? 'prod_conferences' : 'dev_conferences'
     end
   end
 end
