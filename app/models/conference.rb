@@ -8,6 +8,8 @@ class Conference
     :url,
     :city,
     :country,
+    :startDate,
+    :endDate,
     :cfpStartDate,
     :cfpEndDate,
     :cfpUrl,
@@ -22,17 +24,25 @@ class Conference
   date_accessor(
     :startDate,
     :endDate,
-    :cfpStart,
-    :cfpEnd,
+    :cfpStartDate,
+    :cfpEndDate,
   )
 
   validates :name, :url, :startDate, presence: true
 
-  #legacy mapping support
+  # Legacy mapping support
   def date=(value); self.startDate = value; end
   def cfpDate=(value); self.cfpStart = value; end
 
   def as_json(*args)
-    super(*args).except(:id).merge(objectID: id)
+    super(*args)
+      .except(:id)
+      .merge(
+        objectID: id,
+        startDateUnix: startDateUnix,
+        endDateUnix: endDateUnix,
+        cfpStartDateUnix: cfpStartDateUnix,
+        cfpEndDateUnix: cfpEndDateUnix,
+      )
   end
 end
