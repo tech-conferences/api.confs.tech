@@ -3,7 +3,7 @@ module Github
     DEFAULT_URL = 'https://raw.githubusercontent.com/tech-conferences/confs.tech/master/conferences'
     JS_URL      = 'https://raw.githubusercontent.com/tech-conferences/javascript-conferences/master/conferences'
 
-    CONF_TOPICS = %w[javascript css php ux ruby ios android general tech-comm].freeze
+    CONF_TOPICS = %w[javascript css php ux ruby ios android data tech-comm general].freeze
 
     def results
       @results ||= {}
