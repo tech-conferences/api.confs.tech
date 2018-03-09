@@ -1,7 +1,6 @@
 class WebhooksController < ApplicationController
   def sync
-    # TODO: move to BG job
-    response = Algolia::SyncConferences.run
-    render json: { success: response["objectIDs"].present? }
+    response = Github::FetchConferences.run
+    render json: response
   end
 end

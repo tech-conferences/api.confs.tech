@@ -1,12 +1,12 @@
 module Algolia
   class SyncConferences < ApplicationService
 
-    def initialize(conferences = nil)
-      @conferences = conferences || Github::FetchConferences.run
+    def initialize(conference)
+      @conference = conference
     end
 
     def execute
-      algolia.add_objects(@conferences)
+      algolia.add_object(@conference)
     end
 
     private
