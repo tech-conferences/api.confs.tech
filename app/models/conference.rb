@@ -63,6 +63,6 @@ class Conference < ActiveRecord::Base
   private
 
   def algolia_index
-    Algolia::SyncConferences.new(self).execute
+    Algolia::SyncConferences.new(self).execute if Rails.env.production?
   end
 end
