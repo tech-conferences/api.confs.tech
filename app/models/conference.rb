@@ -51,6 +51,7 @@ class Conference < ActiveRecord::Base
     super(*args)
       .except(:id)
       .merge(
+        topics: topics.map(&:name),
         objectID: uuid,
         startDateUnix: startDateUnix,
         endDateUnix: endDateUnix,
