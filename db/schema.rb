@@ -10,7 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180302144026) do
+ActiveRecord::Schema.define(version: 20180309011359) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "conferences", force: :cascade do |t|
+    t.string "uuid"
+    t.string "name"
+    t.string "url"
+    t.string "city"
+    t.string "country"
+    t.string "startDate"
+    t.string "endDate"
+    t.string "cfpStartDate"
+    t.string "cfpEndDate"
+    t.string "cfpUrl"
+    t.string "twitter"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
+  end
+
+  create_table "conferences_topics", id: false, force: :cascade do |t|
+    t.integer "topic_id"
+    t.integer "conference_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"

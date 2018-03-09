@@ -5,7 +5,7 @@ module DateConcern
     def self.date_accessor(*args)
       args.each do |attr_name|
         define_method "#{attr_name}Unix" do
-          Chronic.parse(instance_variable_get("@#{attr_name}")).to_i
+          Chronic.parse(send(attr_name)).to_i
         end
       end
     end

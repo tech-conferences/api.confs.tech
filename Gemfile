@@ -10,6 +10,7 @@ gem 'puma', '~> 3.7'
 gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
+gem 'pg'
 
 # API
 gem 'faraday'
