@@ -16,20 +16,21 @@ class Conference < ActiveRecord::Base
   after_save :algolia_index
 
   def self.create_or_update(attributes, topic)
-    conference = self.new(attributes)
+    whitelised_attributes = self.whitelised_attributes(attributes)
+    conference = self.new whitelised_attributes
     conference.topics << topic
     if conference.valid?
-      conference.save
+      conference.save!
       conference
     else
       existing_conf = Conference.where(uuid: conference.get_uuid).first
       unless existing_conf.topics.include? topic
         existing_conf.topics << topic
-        existing_conf.save
+        existing_conf.save!
       end
-      existing_conf.assign_attributes attributes
+      existing_conf.assign_attributes whitelised_attributes
       if existing_conf.changed?
-        existing_conf.save
+        existing_conf.save!
         existing_conf
       end
     end
@@ -58,6 +59,14 @@ class Conference < ActiveRecord::Base
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
       )
+  end
+
+  def self.whitelised_attributes(attributes)
+    whitelist_attr = {}
+    self.attribute_names.map do |_attr|
+      whitelist_attr[_attr] = attributes[_attr] if attributes[_attr]
+    end
+    whitelist_attr
   end
 
   private
