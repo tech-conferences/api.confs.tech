@@ -58,7 +58,9 @@ class ConferencesController < ApplicationController
       :city,
       :country,
       :twitter,
-      :topic
+      :topic,
+      :cfpUrl,
+      :cfpEndDate
     ).to_h
   end
 end
