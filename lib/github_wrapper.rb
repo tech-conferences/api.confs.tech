@@ -2,13 +2,13 @@ class GithubWrapper
 
   attr_accessor(:repository, :base, :client)
 
-  def initialize(base = 'master')
-    @repository = 'nimzco/confs.tech'
+  def initialize(base = 'master', topic = 'javascript')
+    @repository = get_repository(topic)
     @base = base
     @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
   end
 
-  def create_pull_request(head, title)
+  def create_pull_request(head, title, topic)
     {
       status: @client.last_response.status,
       data: @client.create_pull_request(@repository, @base, head, title)
@@ -51,5 +51,15 @@ class GithubWrapper
     refs = @client.refs('nimzco/confs.tech', 'heads')
     master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
     master_ref[:object][:sha]
+  end
+
+  private
+
+  def get_repository(topic)
+    if topic === 'javascript'
+      'tech-conferences/javascript-conferences'
+    else
+      'tech-conferences/confs.tech'
+    end
   end
 end
