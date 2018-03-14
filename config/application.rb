@@ -22,6 +22,7 @@ module ApiConfsTech
     config.load_defaults 5.1
 
     config.autoload_paths << Rails.root.join('lib')
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -31,9 +32,11 @@ module ApiConfsTech
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    config.gh_repo = 'manumilou/confs.tech'
-    config.gh_base = 'master'
-    config.gh_token = '33632e357776d75e1b7181138c81aa3992bf718d'
-
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', :headers => :any, :methods => [:get, :post, :options]
+      end
+    end
   end
 end
