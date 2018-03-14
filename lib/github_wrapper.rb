@@ -2,9 +2,9 @@ class GithubWrapper
 
   attr_accessor(:repository, :base, :client)
 
-  def initialize(base = 'master', topic = 'javascript')
+  def initialize(topic = 'javascript')
     @repository = get_repository(topic)
-    @base = base
+    @base = 'master'
     @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
   end
 
