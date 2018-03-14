@@ -48,7 +48,7 @@ class GithubWrapper
   end
 
   def head_sha
-    refs = @client.refs('nimzco/confs.tech', 'heads')
+    refs = @client.refs(@repository, 'heads')
     master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
     master_ref[:object][:sha]
   end
