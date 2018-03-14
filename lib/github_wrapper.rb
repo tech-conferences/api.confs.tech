@@ -8,10 +8,10 @@ class GithubWrapper
     @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
   end
 
-  def create_pull_request(head, title, topic)
+  def create_pull_request(head, title, body='')
     {
       status: @client.last_response.status,
-      data: @client.create_pull_request(@repository, @base, head, title)
+      data: @client.create_pull_request(@repository, @base, head, title, body)
     }
   end
 
@@ -42,7 +42,6 @@ class GithubWrapper
   def update(encoded, content)
     json = Base64.decode64(encoded)
     hash = JSON.parse(json)
-    # hash.merge !content
     hash << content
     JSON.pretty_generate(hash)
   end

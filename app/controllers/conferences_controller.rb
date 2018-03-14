@@ -10,12 +10,23 @@ class ConferencesController < ApplicationController
     file = gh_wrapper.pull_from_repo(filepath)
     commit_content = gh_wrapper.update(file[:content], conference_params)
     commit = gh_wrapper.create_commit(commit_message, file[:path], file[:sha], commit_content, branch_name)
-    result = gh_wrapper.create_pull_request(branch_name, commit_message)
+    result = gh_wrapper.create_pull_request(branch_name, commit_message, pr_body)
 
     render json: result
   end
 
   private
+
+  def pr_body
+   <<~PRBODY
+      Hey there, it's ConfsBot! 👋🏼
+
+      Here is a new conference:
+      ```json
+      #{JSON.pretty_generate(conference_params)}
+      ```
+    PRBODY
+  end
 
   def validate_topic
     if Topic.where(name: conference_params[:topic]).length === 0
