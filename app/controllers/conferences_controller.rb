@@ -4,7 +4,7 @@ class ConferencesController < ApplicationController
   before_action :validate_params, only: :create
 
   def create
-    gh_wrapper = GithubWrapper.new(conference_params[:topic])
+    gh_wrapper = ::GithubWrapper.new(conference_params[:topic])
     file = gh_wrapper.pull_from_repo(filepath)
     commit_content = gh_wrapper.update(file[:content], conference_params)
     commit = gh_wrapper.create_commit(commit_message, file[:path], file[:sha], commit_content, branch_name)
