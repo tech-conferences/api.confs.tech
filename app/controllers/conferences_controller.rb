@@ -8,7 +8,7 @@ class ConferencesController < ApplicationController
   def create
     gh_wrapper = ::GithubWrapper.new(conference_params[:topic])
     file = gh_wrapper.pull_from_repo(filepath)
-    commit_content = gh_wrapper.update(file[:content], conference_params)
+    commit_content = gh_wrapper.update(file[:content], sanatize_conf_params(conference_params))
     commit = gh_wrapper.create_commit(commit_message, file[:path], file[:sha], commit_content, branch_name)
     result = gh_wrapper.create_pull_request(branch_name, commit_message, pr_body)
 
@@ -23,7 +23,7 @@ class ConferencesController < ApplicationController
 
       Here is a new conference:
       ```json
-      #{JSON.pretty_generate(conference_params)}
+      #{JSON.pretty_generate(sanatize_conf_params(conference_params))}
       ```
     PRBODY
   end
@@ -58,6 +58,12 @@ class ConferencesController < ApplicationController
 
   def filepath
     "conferences/#{year}/#{conference_params[:topic]}.json"
+  end
+
+  def sanatize_conf_params(params)
+    params.delete :topic
+    params[:url] = params[:url].gsub(/\/$/, '')
+    params
   end
 
   def conference_params
