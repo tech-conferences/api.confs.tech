@@ -8,8 +8,8 @@ class ConferenceTest < ActiveSupport::TestCase
   end
 
   test "Url being formatted if needed" do
-    conference = Conference.new(url: 'lala')
+    conference = Conference.new(url: 'lala.com/')
     conference.save(validate: false)
-    assert_equal conference.url, 'http://lala'
+    assert_equal conference.url, 'http://lala.com'
   end
 end

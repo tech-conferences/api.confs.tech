@@ -6,5 +6,6 @@ class URLHelper
     else
       url
     end
+    url.gsub(/\/$/, '')
   end
 end
