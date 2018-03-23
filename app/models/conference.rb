@@ -13,6 +13,7 @@ class Conference < ActiveRecord::Base
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid
+  before_save :fix_url
   after_save :algolia_index
 
   def self.create_or_update(attributes, topic)
@@ -70,6 +71,10 @@ class Conference < ActiveRecord::Base
   end
 
   private
+
+  def fix_url
+    self.url = URLHelper.fix_url(self.url) if self.url
+  end
 
   def algolia_index
     Algolia::SyncConferences.new(self).execute if Rails.env.production?
