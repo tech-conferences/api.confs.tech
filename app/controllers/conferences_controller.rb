@@ -1,5 +1,3 @@
-require 'github_wrapper'
-
 class ConferencesController < ApplicationController
   skip_before_action :authenticate_request
   before_action :validate_topic, only: :create
