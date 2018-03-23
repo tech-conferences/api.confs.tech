@@ -12,8 +12,7 @@ class Conference < ActiveRecord::Base
   has_and_belongs_to_many :topics
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
-  before_validation :set_uuid
-  before_save :fix_url
+  before_validation :set_uuid, :fix_url
   after_save :algolia_index
 
   def self.create_or_update(attributes, topic)
