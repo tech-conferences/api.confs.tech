@@ -14,6 +14,7 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
   after_save :algolia_index
+  before_destroy :algolia_remove
 
   def self.create_or_update(attributes, topic)
     whitelised_attributes = self.whitelised_attributes(attributes)
@@ -76,6 +77,10 @@ class Conference < ActiveRecord::Base
   end
 
   def algolia_index
-    Algolia::SyncConferences.new(self).execute if Rails.env.production?
+    Algolia::SyncConferences.new(self).add if Rails.env.production?
+  end
+
+  def algolia_remove
+    Algolia::SyncConferences.new(self).remove if Rails.env.production?
   end
 end
