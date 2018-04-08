@@ -23,6 +23,8 @@ class ConferencesController < ApplicationController
       ```json
       #{JSON.pretty_generate(sanatize_conf_params(conference_params))}
       ```
+      #{params[:comment] ? '--' : ''}
+      #{params[:comment]}
     PRBODY
   end
 
@@ -75,7 +77,7 @@ class ConferencesController < ApplicationController
       :twitter,
       :topic,
       :cfpUrl,
-      :cfpEndDate
+      :cfpEndDate,
     ).to_h
   end
 end
