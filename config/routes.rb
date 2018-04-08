@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     root to: "conferences#index"
   end
 
-  scope :api do
+  namespace :api do
     resources :conferences, only: :create
-    get '/webhooks/sync', to: 'api/webhooks#sync'
+    get '/webhooks/sync', to: 'webhooks#sync'
   end
 end
