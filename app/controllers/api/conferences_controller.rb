@@ -1,4 +1,4 @@
-class ConferencesController < ApplicationController
+class Api::ConferencesController < ApiController
   skip_before_action :authenticate_request
   before_action :validate_topic, only: :create
   before_action :validate_params, only: :create

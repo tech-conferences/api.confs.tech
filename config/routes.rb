@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  resources :conferences, only: :create
+  devise_for :user
+  namespace :admin do
+    resources :conferences
+    resources :topics
+    root to: "conferences#index"
+  end
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  post 'authenticate', to: 'authentication#authenticate'
-
-  get '/webhooks/sync', to: 'webhooks#sync'
+  scope :api do
+    resources :conferences, only: :create
+    get '/webhooks/sync', to: 'api/webhooks#sync'
+  end
 end

@@ -15,6 +15,9 @@ gem 'pg'
 
 # Ruby toolkit for the GitHub API
 gem "octokit", "~> 4.0"
+gem "administrate"
+
+gem 'devise'
 
 # API
 gem 'faraday'
