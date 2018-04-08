@@ -5,8 +5,12 @@ module Algolia
       @conference = conference
     end
 
-    def execute
+    def add
       algolia.add_object(@conference)
+    end
+
+    def remove
+      algolia.delete_object(@conference)
     end
 
     private
