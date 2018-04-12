@@ -17,6 +17,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     country: Field::String,
     startDate: Field::String,
     endDate: Field::String,
+    emails: Field::String,
     cfpStartDate: Field::String,
     cfpEndDate: Field::String,
     cfpUrl: Field::String,
@@ -37,6 +38,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :startDate,
     :endDate,
     :cfpUrl,
+    :emails,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
@@ -51,6 +53,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :country,
     :startDate,
     :endDate,
+    :emails,
     :cfpStartDate,
     :cfpEndDate,
     :cfpUrl,
@@ -71,6 +74,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :country,
     :startDate,
     :endDate,
+    :emails,
     :cfpStartDate,
     :cfpEndDate,
     :cfpUrl,

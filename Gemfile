@@ -19,6 +19,7 @@ gem 'administrate'
 gem 'uglifier'
 
 gem 'devise'
+gem 'watir'
 
 # API
 gem 'faraday'

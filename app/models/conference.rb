@@ -70,6 +70,18 @@ class Conference < ActiveRecord::Base
     whitelist_attr
   end
 
+  @@email_regexp = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
+  def fetch_emails(_browser = nil)
+    browser = _browser || Watir::Browser.new
+    browser.goto self.url
+    emails = browser.body.html.scan(@@email_regexp)
+      .reject{|e| /@(1|2|3)x/.match(e) or /your?@/.match(e)  or /example.com/.match(e) }
+      .uniq
+    self.emails = emails.any? ? emails.join(';') : "contact@#{URI.parse(self.url).host}".gsub('www.', '')
+    self.save!
+    browser.close unless _browser
+  end
+
   private
 
   def fix_url
