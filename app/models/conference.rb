@@ -14,6 +14,7 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
   after_save :algolia_index
+  after_save :fetch_twitter_followers
   before_destroy :algolia_remove
 
   def self.create_or_update(attributes, topic)
@@ -85,12 +86,16 @@ class Conference < ActiveRecord::Base
   private
 
   def fetch_twitter_followers
-    return if self.twitter.blank?
+    return if self.twitter.blank? or self.twitter.twitter_followers.present?
 
-    page = Nokogiri::HTML(open("https://twitter.com/#{self.twitter}"))
-    followers = page.css('[data-nav="followers"] .ProfileNav-value').attr('data-count').value
-    self.twitter_followers = followers.to_i
-    self.save
+    begin
+      page = Nokogiri::HTML(open("https://twitter.com/#{self.twitter}"))
+      followers = page.css('[data-nav="followers"] .ProfileNav-value').attr('data-count').value
+      self.twitter_followers = followers.to_i
+      self.save
+    rescue => e
+    end
+
   end
 
   def fix_url
