@@ -84,6 +84,15 @@ class Conference < ActiveRecord::Base
 
   private
 
+  def fetch_twitter_followers
+    return if self.twitter.blank?
+
+    page = Nokogiri::HTML(open("https://twitter.com/#{self.twitter}"))
+    followers = page.css('[data-nav="followers"] .ProfileNav-value').attr('data-count').value
+    self.twitter_followers = followers.to_i
+    self.save
+  end
+
   def fix_url
     self.url = URLHelper.fix_url(self.url) if self.url
   end

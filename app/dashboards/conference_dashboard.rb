@@ -22,6 +22,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     cfpEndDate: Field::String,
     cfpUrl: Field::String,
     twitter: Field::String,
+    twitter_followers: Field::Number,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
@@ -38,7 +39,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :startDate,
     :endDate,
     :cfpUrl,
-    :emails,
+    :twitter_followers,
   ].freeze
 
   # SHOW_PAGE_ATTRIBUTES
