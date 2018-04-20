@@ -86,7 +86,7 @@ class Conference < ActiveRecord::Base
   private
 
   def fetch_twitter_followers
-    return if self.twitter.blank? or self.twitter.twitter_followers.present?
+    return if self.twitter.blank? or self.twitter_followers.present?
 
     begin
       page = Nokogiri::HTML(open("https://twitter.com/#{self.twitter}"))
