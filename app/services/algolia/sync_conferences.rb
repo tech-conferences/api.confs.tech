@@ -10,7 +10,7 @@ module Algolia
     end
 
     def remove
-      algolia.delete_object(@conference)
+      algolia.delete_object(@conference.uuid)
     end
 
     private
