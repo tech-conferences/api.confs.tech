@@ -39,7 +39,7 @@ class Conference < ActiveRecord::Base
   end
 
   def get_uuid
-    Digest::SHA1.base64digest "#{name}-#{URI.parse(url).host}-#{startDate}-#{city}"
+    Digest::SHA1.base64digest "#{URI.parse(url).host}-#{startDate[0..6]}-#{city}"
   end
 
   def set_uuid
