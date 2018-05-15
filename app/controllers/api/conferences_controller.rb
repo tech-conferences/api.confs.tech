@@ -47,8 +47,7 @@ class Api::ConferencesController < ApiController
   end
 
   def branch_name
-    string = "#{params[:name]}-#{params[:url]}-#{params[:startDate]}"
-    Digest::SHA2.hexdigest(string)[0..16]
+    (0...19).map { (65 + rand(26)).chr }.join.downcase
   end
 
   def year
