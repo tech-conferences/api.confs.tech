@@ -47,7 +47,7 @@ class Api::ConferencesController < ApiController
   end
 
   def branch_name
-    (0...19).map { (65 + rand(26)).chr }.join.downcase
+    @branch_name ||= (0...19).map { (65 + rand(26)).chr }.join.downcase
   end
 
   def year
