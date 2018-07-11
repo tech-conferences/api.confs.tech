@@ -12,6 +12,7 @@ gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
 gem 'pg'
+gem 'bugsnag'
 
 # Ruby toolkit for the GitHub API
 gem "octokit", "~> 4.0"
