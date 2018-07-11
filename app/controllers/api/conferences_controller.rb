@@ -61,6 +61,9 @@ class Api::ConferencesController < ApiController
 
   def sanatize_conf_params(params)
     params.delete :topic
+    params.delete :cfpUrl if params[:cfpUrl].blank?
+    params.delete :cfpEndDate if params[:cfpEndDate].blank?
+    params.delete :twitter if params[:twitter].blank?
     params[:url] = params[:url].gsub(/\/$/, '')
     params
   end
