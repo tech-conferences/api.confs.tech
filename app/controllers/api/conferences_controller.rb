@@ -21,6 +21,8 @@ class Api::ConferencesController < ApiController
 
       Here is a new conference:
       ```json
+      // #{@topic}
+
       #{JSON.pretty_generate(sanatize_conf_params(conference_params))}
       ```
       #{params[:comment] ? '--' : ''}
@@ -60,7 +62,7 @@ class Api::ConferencesController < ApiController
   end
 
   def sanatize_conf_params(params)
-    params.delete :topic
+    @topic = params.delete :topic
     params.delete :cfpUrl if params[:cfpUrl].blank?
     params.delete :cfpEndDate if params[:cfpEndDate].blank?
     params.delete :twitter if params[:twitter].blank?
