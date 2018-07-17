@@ -1,7 +1,6 @@
 module Github
   class FetchConferences < ApplicationService
-    DEFAULT_URL = 'https://raw.githubusercontent.com/tech-conferences/confs.tech/master/conferences'
-    JS_URL      = 'https://raw.githubusercontent.com/tech-conferences/javascript-conferences/master/conferences'
+    CONFERENCES_URL = 'https://raw.githubusercontent.com/tech-conferences/conference-data/master/conferences'
 
     def results
       @results ||= []
@@ -11,10 +10,10 @@ module Github
       (start_year..end_year).map do |year|
         Topic.all.map do |topic|
           begin
-            response = Faraday.get "#{topic.name == 'javascript' ? JS_URL : DEFAULT_URL}/#{year}/#{topic.name}.json"
+            response = Faraday.get "#{CONFERENCES_URL}/#{year}/#{topic.name}.json"
             response.success? ? handle_success(response, topic) : handle_error
-          rescue => e
-            # TODO: send email to Nima that entry has an invalid key
+          rescue => exception
+            Bugsnag.notify(exception)
           end
         end
       end

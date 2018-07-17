@@ -55,10 +55,6 @@ class GithubWrapper
   private
 
   def get_repository(topic)
-    if topic === 'javascript'
-      'tech-conferences/javascript-conferences'
-    else
-      'tech-conferences/confs.tech'
-    end
+    'tech-conferences/conference-data'
   end
 end
