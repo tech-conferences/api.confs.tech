@@ -3,7 +3,7 @@ class GithubWrapper
   attr_accessor(:repository, :base, :client)
 
   def initialize(topic = 'javascript')
-    @repository = get_repository(topic)
+    @repository = 'tech-conferences/conference-data'
     @base = 'master'
     @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
   end
@@ -50,11 +50,5 @@ class GithubWrapper
     refs = @client.refs(@repository, 'heads')
     master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
     master_ref[:object][:sha]
-  end
-
-  private
-
-  def get_repository(topic)
-    'tech-conferences/conference-data'
   end
 end
