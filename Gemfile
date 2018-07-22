@@ -13,6 +13,8 @@ gem 'algoliasearch'
 gem 'chronic'
 gem 'pg'
 gem 'bugsnag'
+gem 'twitter', '~> 6.2.0'
+gem 'sidekiq', '~> 4.1.3'
 
 # Ruby toolkit for the GitHub API
 gem "octokit", "~> 4.0"

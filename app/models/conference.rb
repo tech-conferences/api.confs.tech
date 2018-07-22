@@ -13,8 +13,9 @@ class Conference < ActiveRecord::Base
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
+  after_create :tweet
   after_save :algolia_index
-  after_save :fetch_twitter_followers
+  after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
 
   def self.create_or_update(attributes, topic)
@@ -83,9 +84,14 @@ class Conference < ActiveRecord::Base
     browser.close unless _browser
   end
 
+  def start_date
+    return nil unless startDate.length === 10
+    Date.parse(startDate)
+  end
+
   private
 
-  def fetch_twitter_followers
+  def fetch_twitter_followers_count
     return if self.twitter.blank? or self.twitter_followers.present?
 
     begin
@@ -108,5 +114,9 @@ class Conference < ActiveRecord::Base
 
   def algolia_remove
     Algolia::SyncConferences.new(self).remove if Rails.env.production?
+  end
+
+  def tweet
+    TwitterWorker.perform_in(5.minutes, self) if Rails.env.production?
   end
 end
