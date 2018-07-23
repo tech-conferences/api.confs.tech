@@ -25,14 +25,14 @@ module Twitter
     def tweet_message(conference)
       if conference.twitter.present?
         <<~PRBODY
-          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %e')} in #{conference.city}, #{conference.country}
+          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
           => #{confs_url(conference)}
           cc #{conference.twitter}!  🎉
           #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
         PRBODY
       else
         <<~PRBODY
-          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %e')} in #{conference.city}, #{conference.country}
+          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
           => #{confs_url(conference)} 🎉
           #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
         PRBODY
