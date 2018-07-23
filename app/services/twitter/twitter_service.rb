@@ -26,14 +26,14 @@ module Twitter
       if conference.twitter.present?
         <<~PRBODY
           We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
-          => #{confs_url(conference)}
+          => #{conference.url}
           cc #{conference.twitter}!  🎉
           #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
         PRBODY
       else
         <<~PRBODY
           We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
-          => #{confs_url(conference)} 🎉
+          => #{conference.url} 🎉
           #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
         PRBODY
       end
