@@ -33,7 +33,7 @@ module Twitter
 
     def confs_url(conference)
       main_topic = conference.topics.first
-      topics = conference.topics.map(&:name).join("+")
+      topics = conference.topics.map(&:name).join("%2B")
       "https://confs.tech/#{main_topic.name}?topics=#{topics}##{conf_id(conference)}"
     end
 
