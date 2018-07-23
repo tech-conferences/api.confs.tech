@@ -12,7 +12,6 @@ module Twitter
     def tweet(conference)
       return unless Rails.env.production?
       return if conference.tweeted_at.present?
-      return if conference.twitter.blank?
       return if conference.start_date.nil? or conference.start_date < Date.today
 
       conference.tweeted_at = DateTime.now
@@ -24,11 +23,20 @@ module Twitter
     private
 
     def tweet_message(conference)
-      <<~PRBODY
-        Hey #{conference.twitter}! We've just added #{conference.name} to Confs.tech!
-        => #{confs_url(conference)} 🎉 <=
-        #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
-      PRBODY
+      if conference.twitter.present?
+        <<~PRBODY
+          We've just added #{conference.name}!
+          => #{confs_url(conference)}
+          cc #{conference.twitter}!  🎉
+          #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
+        PRBODY
+      else
+        <<~PRBODY
+          We've just added #{conference.name}!
+          => #{confs_url(conference)} 🎉
+          #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
+        PRBODY
+      end
     end
 
     def confs_url(conference)
