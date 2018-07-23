@@ -117,6 +117,6 @@ class Conference < ActiveRecord::Base
   end
 
   def tweet
-    TwitterWorker.perform_async(self) if Rails.env.production?
+    TwitterWorker.new.perform(self) if Rails.env.production?
   end
 end
