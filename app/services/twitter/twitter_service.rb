@@ -23,20 +23,22 @@ module Twitter
     private
 
     def tweet_message(conference)
+      tweet = <<~PRBODY
+        We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
+        => #{conference.url}
+      PRBODY
+
       if conference.twitter.present?
-        <<~PRBODY
-          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
-          => #{conference.url}
-          cc #{conference.twitter}!  🎉
-          #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
-        PRBODY
-      else
-        <<~PRBODY
-          We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
-          => #{conference.url} 🎉
-          #{conference.topics.map{ |topic| "##{topic.name}"}.join(" ")}
+        tweet << <<~PRBODY
+          cc #{conference.twitter}! 🎉
         PRBODY
       end
+
+      topics = conference.topics.reject{|topic| topic.name == 'general'}
+      tweet << <<~PRBODY
+        #tech #conference #{topics.map{ |topic| "##{topic.name}"}.join(" ")}
+      PRBODY
+      tweet
     end
 
     def confs_url(conference)
