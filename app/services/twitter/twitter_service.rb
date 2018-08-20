@@ -34,11 +34,17 @@ module Twitter
         PRBODY
       end
 
+      if conference.cfpUrl.present? and conference.cfp_end_date.present?
+        tweet << <<~PRBODY
+          CFP ends #{conference.cfp_end_date.strftime('%B, %-d')}. Register at #{conference.cfpUrl}
+        PRBODY
+      end
+
       topics = conference.topics.reject{|topic| topic.name == 'general'}
       tweet << <<~PRBODY
         #tech #conference #{topics.map{ |topic| "##{topic.name}"}.join(" ")}
       PRBODY
-      tweet
+      tweet.strip
     end
 
     def confs_url(conference)

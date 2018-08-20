@@ -89,6 +89,11 @@ class Conference < ActiveRecord::Base
     Date.parse(startDate)
   end
 
+  def cfp_end_date
+    return nil unless startDate.present?
+    Date.parse(cfpEndDate)
+  end
+
   private
 
   def fetch_twitter_followers_count
