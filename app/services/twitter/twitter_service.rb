@@ -36,7 +36,7 @@ module Twitter
 
       if conference.cfpUrl.present? and conference.cfp_end_date.present?
         tweet << <<~PRBODY
-          CFP ends #{conference.cfp_end_date.strftime('%B, %-d')}. Register at #{conference.cfpUrl}
+          Submit your proposal for a talk at #{conference.cfpUrl} before #{conference.cfp_end_date.strftime('%B, %-d')}.
         PRBODY
       end
 

@@ -43,7 +43,7 @@ class GithubWrapperTest < ActiveSupport::TestCase
     expected_message = <<~PRBODY
     We've just added Conference! Happening January, 1 in Nice, France
     => https://web.dev
-    CFP ends January, 1. Register at cfp.web.dev
+    Submit your proposal for a talk at cfp.web.dev before January, 1.
     #tech #conference
     PRBODY
     assert_equal expected_message.strip, tweet_message
