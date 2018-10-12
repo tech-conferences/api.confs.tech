@@ -81,7 +81,7 @@ class Api::ConferencesController < ApiController
     case country_name.downcase
     when 'u.s.', 'us', 'usa', 'united states', 'united states of america'
       return 'U.S.A.'
-    when 'uk', 'uk.', 'u.k', 'uk', 'united kingdom'
+    when 'uk', 'uk.', 'u.k', 'uk', 'united kingdom', 'england'
       return 'U.K.'
     end
 
