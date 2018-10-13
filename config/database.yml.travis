@@ -1,0 +1,9 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+test:
+  <<: *default
+  database: api_confs_tech_test
+  username: postgres
