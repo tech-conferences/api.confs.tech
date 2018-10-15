@@ -39,6 +39,13 @@ class GithubWrapper
     @client.contents(@repository, path: path, query: {ref: @base})
   end
 
+  def update(encoded, content)
+    json = Base64.decode64(encoded)
+    hash = JSON.parse(json)
+    hash << content
+    JSON.pretty_generate(hash)
+  end
+
   def head_sha
     refs = @client.refs(@repository, 'heads')
     master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
