@@ -40,15 +40,28 @@ class GithubWrapper
   end
 
   def update(encoded, content)
-    json = Base64.decode64(encoded)
-    hash = JSON.parse(json)
-    hash << content
-    JSON.pretty_generate(hash)
+    raw_conferences_json = Base64.decode64(encoded)
+    conferences_json = JSON.parse(raw_conferences_json)
+    conferences_json << content
+    ordered_conferences = order_confs(conferences_json)
+    JSON.pretty_generate(ordered_conferences)
   end
 
   def head_sha
     refs = @client.refs(@repository, 'heads')
     master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
     master_ref[:object][:sha]
+  end
+
+  private
+
+  def order_confs(confs)
+    begin
+      confs.sort_by do |conf|
+        Conference.new(conf).start_date
+      end
+    rescue => exception
+      confs
+    end
   end
 end
