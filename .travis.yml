@@ -1,0 +1,10 @@
+language: ruby
+rvm:
+  - 2.4.4
+services:
+  - postgresql
+
+before_script:
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database api_confs_tech_test;' -U postgres
+  - RAILS_ENV=test bundle exec rake db:migrate && bundle exec rake db:seed

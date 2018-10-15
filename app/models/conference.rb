@@ -110,7 +110,7 @@ class Conference < ActiveRecord::Base
   end
 
   def fix_url
-    self.url = URLHelper.fix_url(self.url) if self.url
+    self.url = URLHelper.fix_url(self.url) if self.url.present?
   end
 
   def algolia_index

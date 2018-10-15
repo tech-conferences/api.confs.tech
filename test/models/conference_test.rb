@@ -2,14 +2,29 @@ require 'test_helper'
 
 class ConferenceTest < ActiveSupport::TestCase
   test "set uuid" do
-    conference = Conference.new(url: 'lala')
+    conference = Conference.new(conference_params(url: 'lala'))
     conference.valid?
     assert conference.uuid.present?
   end
 
   test "Url being formatted if needed" do
-    conference = Conference.new(url: 'lala.com/')
-    conference.save(validate: false)
-    assert_equal conference.url, 'http://lala.com'
+    conference = Conference.new(conference_params(url: 'lala.com/'))
+    conference.valid?
+    assert_equal 'http://lala.com', conference.url
+  end
+
+  private
+
+  def conference_params(extra_params = {})
+    {
+      name: 'Name',
+      url: 'nimz.co',
+      startDate: '2018-04-01',
+      endDate: '2018-04-01',
+      city: 'Nice',
+      country: 'France',
+      topics: [Topic.first]
+    }.merge(extra_params)
   end
 end
+

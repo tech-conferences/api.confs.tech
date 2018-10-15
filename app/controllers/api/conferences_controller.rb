@@ -66,8 +66,26 @@ class Api::ConferencesController < ApiController
     params.delete :cfpUrl if params[:cfpUrl].blank?
     params.delete :cfpEndDate if params[:cfpEndDate].blank?
     params.delete :twitter if params[:twitter].blank?
+    params[:name] = sanatize_name params[:name]
+    params[:country] = sanatize_country_name params[:country]
+
     params[:url] = params[:url].gsub(/\/$/, '')
     params
+  end
+
+  def sanatize_name(name)
+    name.gsub(year, '').strip
+  end
+
+  def sanatize_country_name(country_name)
+    case country_name.downcase
+    when 'u.s.', 'us', 'usa', 'united states', 'united states of america'
+      return 'U.S.A.'
+    when 'uk', 'uk.', 'u.k', 'uk', 'united kingdom', 'england'
+      return 'U.K.'
+    end
+
+    country_name
   end
 
   def conference_params

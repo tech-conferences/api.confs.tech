@@ -34,6 +34,10 @@ gem 'rack-cors', :require => 'rack/cors'
 # JWT; Token-based authentication
 gem 'jwt'
 
+group :test do
+  gem 'mocha', '1.7.0', require: false
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'listen', '>= 3.0.5', '< 3.2'

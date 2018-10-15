@@ -142,11 +142,14 @@ GEM
       mimemagic (~> 0.3.2)
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
+    metaclass (0.0.4)
     method_source (0.9.0)
     mimemagic (0.3.2)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
+    mocha (1.7.0)
+      metaclass (~> 0.0.1)
     momentjs-rails (2.20.1)
       railties (>= 3.1)
     multipart-post (2.0.0)
@@ -296,6 +299,7 @@ DEPENDENCIES
   jwt
   listen (>= 3.0.5, < 3.2)
   loofah (~> 2.2.1)
+  mocha (= 1.7.0)
   octokit (~> 4.0)
   pg
   pry-byebug
@@ -313,4 +317,4 @@ DEPENDENCIES
   watir
 
 BUNDLED WITH
-   1.16.1
+   1.16.4
