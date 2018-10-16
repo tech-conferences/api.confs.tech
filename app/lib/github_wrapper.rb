@@ -39,10 +39,10 @@ class GithubWrapper
     @client.contents(@repository, path: path, query: {ref: @base})
   end
 
-  def update(encoded, content)
+  def update(encoded, content = nil)
     raw_conferences_json = Base64.decode64(encoded)
     conferences_json = JSON.parse(raw_conferences_json)
-    conferences_json << content
+    conferences_json << content if content.present?
     ordered_conferences = order_confs(conferences_json)
     JSON.pretty_generate(ordered_conferences)
   end
@@ -58,7 +58,7 @@ class GithubWrapper
   def order_confs(confs)
     begin
       confs.sort_by do |conf|
-        Conference.new(conf).start_date
+        Conference.new(Conference.whitelised_attributes(conf)).start_date
       end
     rescue => exception
       confs
