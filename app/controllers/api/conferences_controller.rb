@@ -79,9 +79,9 @@ class Api::ConferencesController < ApiController
 
   def sanatize_country_name(country_name)
     case country_name.downcase
-    when 'the netherlands'
+    when 'the netherlands', 'nl'
       return 'Netherlands'
-    when 'u.s.', 'us', 'usa', 'united states', 'united states of america'
+    when 'u.s.', 'us', 'usa', 'u.s.a', 'united states', 'united states of america'
       return 'U.S.A.'
     when 'uk', 'uk.', 'u.k', 'uk', 'united kingdom', 'england'
       return 'U.K.'
