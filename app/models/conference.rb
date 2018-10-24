@@ -60,7 +60,8 @@ class Conference < ActiveRecord::Base
         startDateUnix: startDateUnix,
         endDateUnix: endDateUnix,
         cfpStartDateUnix: cfpStartDateUnix,
-        cfpEndDateUnix: cfpEndDateUnix
+        cfpEndDateUnix: cfpEndDateUnix,
+        hasDiscount: affiliateUrl.present?
       )
   end
 
