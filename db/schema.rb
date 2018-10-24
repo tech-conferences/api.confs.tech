@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_24_203101) do
+ActiveRecord::Schema.define(version: 2018_10_24_214000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 2018_10_24_203101) do
     t.string "emails"
     t.integer "twitter_followers"
     t.datetime "tweeted_at"
-    t.string "affiliate_url"
-    t.string "affiliate_text"
+    t.string "affiliateUrl"
+    t.string "affiliateText"
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 

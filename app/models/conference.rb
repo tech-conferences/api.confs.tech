@@ -60,9 +60,7 @@ class Conference < ActiveRecord::Base
         startDateUnix: startDateUnix,
         endDateUnix: endDateUnix,
         cfpStartDateUnix: cfpStartDateUnix,
-        cfpEndDateUnix: cfpEndDateUnix,
-        affiliateUrl: affiliate_url,
-        affiliateText: affiliate_text,
+        cfpEndDateUnix: cfpEndDateUnix
       )
   end
 
