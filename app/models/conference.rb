@@ -91,7 +91,7 @@ class Conference < ActiveRecord::Base
   end
 
   def cfp_end_date
-    return nil unless startDate.present? or cfpEndDate.blank?
+    return nil unless cfpEndDate.present?
     Date.parse(cfpEndDate)
   end
 
