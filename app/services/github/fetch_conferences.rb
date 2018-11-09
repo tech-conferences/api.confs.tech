@@ -6,12 +6,12 @@ module Github
       @results ||= []
     end
 
-    def execute
+    def execute(topics = Topic.all)
       (start_year..end_year).map do |year|
-        Topic.all.map do |topic|
+        topics.map do |topic|
           begin
             response = Faraday.get "#{CONFERENCES_URL}/#{year}/#{topic.name}.json"
-            response.success? ? handle_success(response, topic) : handle_error
+            response.success? ? handle_success(response, topic) : handle_error(response, topic)
           rescue => exception
             Bugsnag.notify(exception)
           end
@@ -28,8 +28,8 @@ module Github
       end
     end
 
-    def handle_error
-      # TODO
+    def handle_error(response, topic)
+      Bugsnag.notify(exception)
     end
 
     def start_year
