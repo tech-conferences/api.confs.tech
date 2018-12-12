@@ -44,6 +44,11 @@ module Twitter
       tweet << <<~PRBODY
         #tech #conference #{topics.map{ |topic| "##{topic.name}"}.join(" ")}
       PRBODY
+      if conference.cfpUrl.present? and conference.cfp_end_date.present?
+        tweet << <<~PRBODY
+          #cfp
+        PRBODY
+      end
       tweet.strip
     end
 
