@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_09_212506) do
+ActiveRecord::Schema.define(version: 2018_12_15_192642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 2018_11_09_212506) do
     t.datetime "tweeted_at"
     t.string "affiliateUrl"
     t.string "affiliateText"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 

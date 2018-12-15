@@ -1,6 +1,7 @@
 class Conference < ActiveRecord::Base
   include ActiveModel::Dirty
   include DateConcern
+  geocoded_by :address
 
   date_accessor(
     :startDate,
@@ -13,6 +14,7 @@ class Conference < ActiveRecord::Base
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
+  after_validation :geocode
   after_create :tweet
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
@@ -51,12 +53,8 @@ class Conference < ActiveRecord::Base
   def date=(value); self.startDate = value; end
   def cfpDate=(value); self.cfpStart = value; end
 
-  def geoloc
-    results = Geocoder.search("#{city}, #{country}")
-    {
-      lat: results.first.coordinates[0],
-      lng: results.first.coordinates[1]
-    }
+  def address
+    [city, country].compact.join(', ')
   end
 
   def as_json(*args)
@@ -70,7 +68,10 @@ class Conference < ActiveRecord::Base
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
         hasDiscount: affiliateUrl.present?,
-        "_geoloc": geoloc
+        "_geoloc": {
+          lat: self.latitude,
+          lat: self.latitude
+        }
       )
   end
 
