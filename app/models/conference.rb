@@ -51,6 +51,14 @@ class Conference < ActiveRecord::Base
   def date=(value); self.startDate = value; end
   def cfpDate=(value); self.cfpStart = value; end
 
+  def geoloc
+    results = Geocoder.search("#{city}, #{country}")
+    {
+      lat: results.first.coordinates[0],
+      lng: results.first.coordinates[1]
+    }
+  end
+
   def as_json(*args)
     super(*args)
       .except(:id)
@@ -61,7 +69,8 @@ class Conference < ActiveRecord::Base
         endDateUnix: endDateUnix,
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
-        hasDiscount: affiliateUrl.present?
+        hasDiscount: affiliateUrl.present?,
+        "_geoloc": geoloc
       )
   end
 
