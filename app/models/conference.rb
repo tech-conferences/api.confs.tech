@@ -54,7 +54,11 @@ class Conference < ActiveRecord::Base
   def cfpDate=(value); self.cfpStart = value; end
 
   def address
-    [city, country].compact.join(', ')
+    if country == 'U.S.A.'
+      [city.split(',').first, country].compact.join(', ')
+    else
+      [city, country].compact.join(', ')
+    end
   end
 
   def as_json(*args)
@@ -68,10 +72,10 @@ class Conference < ActiveRecord::Base
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
         hasDiscount: affiliateUrl.present?,
-        "_geoloc": {
-          lat: self.latitude,
-          lat: self.latitude
-        }
+        "_geoloc": latitude && longitude ? {
+          lat: latitude,
+          lng: longitude,
+        } : {}
       )
   end
 
