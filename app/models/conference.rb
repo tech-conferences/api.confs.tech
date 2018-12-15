@@ -55,7 +55,7 @@ class Conference < ActiveRecord::Base
 
   def address
     if country == 'U.S.A.'
-      [city.split(',').first, country].compact.join(', ')
+      [city.split(',').first, 'US'].compact.join(', ')
     else
       [city, country].compact.join(', ')
     end
