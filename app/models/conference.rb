@@ -137,6 +137,9 @@ class Conference < ActiveRecord::Base
   end
 
   def tweet
-    TwitterWorker.new.perform(self) if Rails.env.production?
+    begin
+      TwitterWorker.new.perform(self) if Rails.env.production?
+    rescue => exception
+    end
   end
 end
