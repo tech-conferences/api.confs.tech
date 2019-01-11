@@ -14,10 +14,10 @@ module Twitter
       return if conference.tweeted_at.present?
       return if conference.start_date.nil? or conference.start_date < Date.today
 
+      @client.update(tweet_message(conference))
+
       conference.tweeted_at = DateTime.now
       conference.save
-
-      @client.update(tweet_message(conference))
     end
 
     private
