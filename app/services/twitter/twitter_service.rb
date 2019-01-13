@@ -16,7 +16,7 @@ module Twitter
 
     def tweet_message(conference)
       tweet = <<~PRBODY
-        We've just added #{conference.name}! Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
+        #{conference.name} – Happening #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
         => #{conference.url}
       PRBODY
 
