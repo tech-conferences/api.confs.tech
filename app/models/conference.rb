@@ -15,7 +15,7 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
   after_validation :geocode
-  after_create :tweet
+
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
@@ -107,6 +107,10 @@ class Conference < ActiveRecord::Base
   def cfp_end_date
     return nil unless cfpEndDate.present?
     Date.parse(cfpEndDate)
+  end
+
+  def tweet_message
+    Twitter::TwitterService.new.tweet_message(self)
   end
 
   private

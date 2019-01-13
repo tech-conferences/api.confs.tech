@@ -1,12 +1,6 @@
 module Twitter
   class TwitterService < ApplicationService
     def initialize
-      @client = ::Twitter::REST::Client.new do |config|
-        config.consumer_key        = Rails.application.secrets.twitter_consumer_key
-        config.consumer_secret     = Rails.application.secrets.twitter_consumer_secret_key
-        config.access_token        = Rails.application.secrets.twitter_access_token
-        config.access_token_secret = Rails.application.secrets.twitter_access_token_secret
-      end
     end
 
     def tweet(conference)
@@ -14,13 +8,11 @@ module Twitter
       return if conference.tweeted_at.present?
       return if conference.start_date.nil? or conference.start_date < Date.today
 
-      @client.update(tweet_message(conference))
+      client.update(tweet_message(conference))
 
       conference.tweeted_at = DateTime.now
       conference.save
     end
-
-    private
 
     def tweet_message(conference)
       tweet = <<~PRBODY
@@ -45,6 +37,17 @@ module Twitter
         #tech #conference #{topics.map{ |topic| "##{topic.name}"}.join(" ")}
       PRBODY
       tweet.strip
+    end
+
+    private
+
+    def client
+      @client ||= ::Twitter::REST::Client.new do |config|
+        config.consumer_key        = Rails.application.secrets.twitter_consumer_key
+        config.consumer_secret     = Rails.application.secrets.twitter_consumer_secret_key
+        config.access_token        = Rails.application.secrets.twitter_access_token
+        config.access_token_secret = Rails.application.secrets.twitter_access_token_secret
+      end
     end
 
     def confs_url(conference)

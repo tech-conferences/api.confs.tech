@@ -9,6 +9,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     topics: Field::HasMany,
+    tweet_message: Field::String,
     id: Field::Number,
     uuid: Field::String,
     name: Field::String,
@@ -33,12 +34,12 @@ class ConferenceDashboard < Administrate::BaseDashboard
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
   COLLECTION_ATTRIBUTES = [
+    :created_at,
     :name,
     :city,
     :country,
     :startDate,
     :endDate,
-    :cfpUrl,
     :twitter_followers,
   ].freeze
 
@@ -61,6 +62,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :twitter,
     :created_at,
     :updated_at,
+    :tweet_message,
   ].freeze
 
   # FORM_ATTRIBUTES
