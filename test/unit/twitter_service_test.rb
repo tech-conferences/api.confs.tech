@@ -55,7 +55,6 @@ class GithubWrapperTest < ActiveSupport::TestCase
     expected_message = <<~PRBODY
     Conference is happening in January, 1 in Nice, France
     => https://web.dev
-    cc @twitter! 🎉
     #tech #conference
     PRBODY
     assert_equal expected_message.strip, tweet_message
