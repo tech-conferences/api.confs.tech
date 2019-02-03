@@ -20,12 +20,6 @@ module Twitter
         => #{conference.url}
       PRBODY
 
-      if conference.twitter.present?
-        tweet << <<~PRBODY
-          cc #{conference.twitter}! 🎉
-        PRBODY
-      end
-
       if conference.cfpUrl.present? and conference.cfp_end_date.present?
         tweet << <<~PRBODY
           Submit your proposal for a talk at #{conference.cfpUrl} before #{conference.cfp_end_date.strftime('%B, %-d')}.
