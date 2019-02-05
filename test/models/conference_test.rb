@@ -9,7 +9,7 @@ class ConferenceTest < ActiveSupport::TestCase
 
   test "Url being formatted if needed" do
     conference = Conference.new(conference_params(url: 'lala.com/'))
-    conference.valid?
+    conference.send :fix_url
     assert_equal 'http://lala.com', conference.url
   end
 

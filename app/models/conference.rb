@@ -13,9 +13,10 @@ class Conference < ActiveRecord::Base
   has_and_belongs_to_many :topics
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
-  before_validation :set_uuid, :fix_url
+  before_validation :set_uuid
   after_validation :geocode
 
+  before_create :fix_url
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
