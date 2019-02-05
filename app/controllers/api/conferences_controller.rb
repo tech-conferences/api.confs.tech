@@ -23,7 +23,7 @@ class Api::ConferencesController < ApiController
 
       Here is a new conference:
       [#{sanatize_params[:url]}](#{sanatize_params[:url]})
-      #{sanatize_params[:cfpUrl].present? ? "[#{sanatize_params[:cfpUrl]}](#{sanatize_params[:cfpUrl]})" : ''}
+      #{sanatize_params[:cfpUrl].present? ? "CFP: [#{sanatize_params[:cfpUrl]}](#{sanatize_params[:cfpUrl]})" : ''}
 
       ```json
       // #{@topic}
