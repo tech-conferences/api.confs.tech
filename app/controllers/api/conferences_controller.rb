@@ -20,6 +20,9 @@ class Api::ConferencesController < ApiController
       Hey there, it's ConfsBot! 👋🏼
 
       Here is a new conference:
+      [#{params[:url]}](#{params[:url]})
+      #{params[:cfpUrl].present? ? "[#{params[:cfpUrl]}](#{params[:cfpUrl]})" : ''}
+
       ```json
       // #{@topic}
 
