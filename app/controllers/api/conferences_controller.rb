@@ -16,17 +16,19 @@ class Api::ConferencesController < ApiController
   private
 
   def pr_body
-   <<~PRBODY
+    sanatize_params = sanatize_conf_params(conference_params)
+
+    <<~PRBODY
       Hey there, it's ConfsBot! 👋🏼
 
       Here is a new conference:
-      [#{params[:url]}](#{params[:url]})
-      #{params[:cfpUrl].present? ? "[#{params[:cfpUrl]}](#{params[:cfpUrl]})" : ''}
+      [#{sanatize_params[:url]}](#{sanatize_params[:url]})
+      #{sanatize_params[:cfpUrl].present? ? "[#{sanatize_params[:cfpUrl]}](#{sanatize_params[:cfpUrl]})" : ''}
 
       ```json
       // #{@topic}
 
-      #{JSON.pretty_generate(sanatize_conf_params(conference_params))}
+      #{JSON.pretty_generate(sanatize_params)}
       ```
       #{params[:comment] ? '--' : ''}
       #{params[:comment]}
@@ -74,6 +76,7 @@ class Api::ConferencesController < ApiController
 
     params[:url] = URLHelper.fix_url(params[:url].gsub(/\/$/, ''))
     params[:cfpUrl] = URLHelper.fix_url(params[:cfpUrl].gsub(/\/$/, '')) if params[:cfpUrl].present?
+
     params
   end
 
