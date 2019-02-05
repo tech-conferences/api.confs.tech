@@ -72,7 +72,8 @@ class Api::ConferencesController < ApiController
     params[:name] = sanatize_name params[:name]
     params[:country] = sanatize_country_name params[:country]
 
-    params[:url] = params[:url].gsub(/\/$/, '')
+    params[:url] = URLHelper.fix_url(params[:url].gsub(/\/$/, ''))
+    params[:cfpUrl] = URLHelper.fix_url(params[:cfpUrl].gsub(/\/$/, '')) if params[:cfpUrl].present?
     params
   end
 

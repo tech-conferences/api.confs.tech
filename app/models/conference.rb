@@ -13,10 +13,9 @@ class Conference < ActiveRecord::Base
   has_and_belongs_to_many :topics
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: {case_sensitive: true}
-  before_validation :set_uuid
-  after_validation :geocode
+  before_validation :set_uuid, :fix_url
 
-  before_create :fix_url
+  after_validation :geocode
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
@@ -126,11 +125,11 @@ class Conference < ActiveRecord::Base
       self.save
     rescue => e
     end
-
   end
 
   def fix_url
     self.url = URLHelper.fix_url(self.url) if self.url.present?
+    self.cfpUrl = URLHelper.fix_url(self.cfpUrl) if self.cfpUrl.present?
   end
 
   def algolia_index

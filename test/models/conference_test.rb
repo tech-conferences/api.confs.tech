@@ -13,6 +13,12 @@ class ConferenceTest < ActiveSupport::TestCase
     assert_equal 'http://lala.com', conference.url
   end
 
+  test "cfpUrl being formatted if needed" do
+    conference = Conference.new(conference_params(url: 'lala.com/', cfpUrl: 'lala.com/'))
+    conference.send :fix_url
+    assert_equal 'http://lala.com', conference.cfpUrl
+  end
+
   private
 
   def conference_params(extra_params = {})
