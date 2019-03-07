@@ -9,7 +9,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
     topics: Field::HasMany,
-    tweet_message: Field::String,
+    tweet_message: Field::String.with_options(searchable: false),
     id: Field::Number,
     uuid: Field::String,
     name: Field::String,
