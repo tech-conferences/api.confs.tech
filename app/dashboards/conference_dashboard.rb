@@ -24,6 +24,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     cfpUrl: Field::String,
     twitter: Field::String,
     twitter_followers: Field::Number,
+    tweeted_at: Field::DateTime,
     created_at: Field::DateTime,
     updated_at: Field::DateTime,
   }.freeze
