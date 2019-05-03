@@ -83,7 +83,7 @@ GEM
     datetime_picker_rails (0.0.7)
       momentjs-rails (>= 2.8.1)
     debug_inspector (0.0.3)
-    devise (4.5.0)
+    devise (4.6.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 6.0)
@@ -208,9 +208,9 @@ GEM
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     redis (3.3.5)
-    responders (2.4.0)
-      actionpack (>= 4.2.0, < 5.3)
-      railties (>= 4.2.0, < 5.3)
+    responders (2.4.1)
+      actionpack (>= 4.2.0, < 6.0)
+      railties (>= 4.2.0, < 6.0)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
     sass (3.6.0)
@@ -276,8 +276,8 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
-    warden (1.2.7)
-      rack (>= 1.0)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     watir (6.14.0)
       selenium-webdriver (~> 3.4, >= 3.4.1)
     websocket-driver (0.7.0)
@@ -295,7 +295,7 @@ DEPENDENCIES
   bugsnag
   byebug
   chronic
-  devise
+  devise (~> 4.6.2)
   faraday
   geocoder (~> 1.5.0)
   jwt

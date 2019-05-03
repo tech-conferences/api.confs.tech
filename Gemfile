@@ -22,7 +22,7 @@ gem "octokit", "~> 4.0"
 gem 'administrate'
 gem 'uglifier'
 
-gem 'devise'
+gem 'devise', "~> 4.6.2"
 gem 'watir'
 
 # API
