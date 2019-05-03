@@ -63,6 +63,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :created_at,
     :updated_at,
     :tweet_message,
+    :tweeted_at,
   ].freeze
 
   # FORM_ATTRIBUTES
@@ -82,6 +83,7 @@ class ConferenceDashboard < Administrate::BaseDashboard
     :cfpEndDate,
     :cfpUrl,
     :twitter,
+    :tweeted_at,
   ].freeze
 
   # Overwrite this method to customize how conferences are displayed
