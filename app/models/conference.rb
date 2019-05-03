@@ -15,6 +15,7 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
 
+  after_create :tweet
   after_validation :geocode
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
