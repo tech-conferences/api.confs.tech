@@ -16,7 +16,7 @@ module Twitter
 
     def tweet_message(conference)
       tweet = <<~PRBODY
-        #{conference.name} is happening in #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
+        #{conference.name} is happening on #{conference.start_date.strftime('%B, %-d')} in #{conference.city}, #{conference.country}
         => #{conference.url}
       PRBODY
 

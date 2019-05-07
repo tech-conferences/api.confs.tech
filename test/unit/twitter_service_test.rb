@@ -18,7 +18,7 @@ class GithubWrapperTest < ActiveSupport::TestCase
     conference.topics << Topic.new(name: 'ux')
     tweet_message = @twitter_service.send :tweet_message, conference
     expected_message = <<~PRBODY
-    Conference is happening in January, 1 in Nice, France
+    Conference is happening on January, 1 in Nice, France
     => https://web.dev
     #tech #conference #ux
     PRBODY
@@ -30,7 +30,7 @@ class GithubWrapperTest < ActiveSupport::TestCase
     conference.topics << Topic.new(name: 'general')
     tweet_message = @twitter_service.send :tweet_message, conference
     expected_message = <<~PRBODY
-    Conference is happening in January, 1 in Nice, France
+    Conference is happening on January, 1 in Nice, France
     => https://web.dev
     #tech #conference
     PRBODY
@@ -41,7 +41,7 @@ class GithubWrapperTest < ActiveSupport::TestCase
     conference = Conference.new @conference_params.merge(cfpUrl: 'cfp.web.dev', cfpEndDate: '2019-01-01')
     tweet_message = @twitter_service.send :tweet_message, conference
     expected_message = <<~PRBODY
-    Conference is happening in January, 1 in Nice, France
+    Conference is happening on January, 1 in Nice, France
     => https://web.dev
     Submit your proposal for a talk at cfp.web.dev before January, 1.
     #tech #conference
@@ -53,7 +53,7 @@ class GithubWrapperTest < ActiveSupport::TestCase
     conference = Conference.new @conference_params.merge(twitter: '@twitter')
     tweet_message = @twitter_service.send :tweet_message, conference
     expected_message = <<~PRBODY
-    Conference is happening in January, 1 in Nice, France
+    Conference is happening on January, 1 in Nice, France
     => https://web.dev
     #tech #conference
     PRBODY
