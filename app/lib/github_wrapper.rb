@@ -35,14 +35,20 @@ class GithubWrapper
     )
   end
 
-  def pull_from_repo(path)
+  def pull_or_create_from_repo(path)
     @client.contents(@repository, path: path, query: {ref: @base})
   end
 
   def update(encoded, content = nil)
-    raw_conferences_json = Base64.decode64(encoded)
-    conferences_json = JSON.parse(raw_conferences_json)
-    conferences_json << content if content.present?
+    conferences_json = if encoded.present?
+      JSON.parse(Base64.decode64(encoded))
+    else
+      []
+    end
+
+    return conferences_json if content.blank?
+
+    conferences_json << content
     ordered_conferences = order_confs(conferences_json)
     JSON.pretty_generate(ordered_conferences)
   end

@@ -4,16 +4,29 @@ class Api::ConferencesController < ApiController
   before_action :validate_params, only: :create
 
   def create
-    gh_wrapper = ::GithubWrapper.new
-    file = gh_wrapper.pull_from_repo(filepath)
     commit_content = gh_wrapper.update(file[:content], sanatize_conf_params(conference_params))
-    commit = gh_wrapper.create_commit(commit_message, file[:path], file[:sha], commit_content, branch_name)
+    commit = gh_wrapper.create_commit(commit_message, filepath, file[:sha], commit_content, branch_name)
     result = gh_wrapper.create_pull_request(branch_name, commit_message, pr_body)
 
     render json: result
   end
 
   private
+
+  def gh_wrapper
+    @gh_wrapper ||= ::GithubWrapper.new
+  end
+
+  def file
+    begin
+      gh_wrapper.pull_or_create_from_repo(filepath)
+    rescue => exception
+      {
+        content: nil,
+        sha: nil
+      }
+    end
+  end
 
   def pr_body
     sanatize_params = sanatize_conf_params(conference_params)
