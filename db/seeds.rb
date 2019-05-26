@@ -7,3 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Topic.create(name: 'javascript')
+Topic.create(name: 'typescript')
+Topic.create(name: 'elm')
+Topic.create(name: 'java')
+Topic.create(name: 'groovy')
