@@ -33,7 +33,7 @@ module Github
     end
 
     def start_year
-      Date.current.year - 1
+      Date.current.year
     end
 
     def end_year
