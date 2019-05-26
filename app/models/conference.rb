@@ -17,6 +17,7 @@ class Conference < ActiveRecord::Base
 
   after_create :tweet
   after_validation :geocode
+  before_save :add_related_topic
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
@@ -146,5 +147,11 @@ class Conference < ActiveRecord::Base
       TwitterWorker.new.perform(self) if Rails.env.production?
     rescue => exception
     end
+  end
+
+  def add_related_topic
+    related_topics = self.topics.map{ |topic| Topic.related_topic(topic) }.compact.uniq
+    return if related_topics.empty?
+    self.topics = self.topics | related_topics
   end
 end
