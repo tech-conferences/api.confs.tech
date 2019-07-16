@@ -1,7 +1,6 @@
 class Conference < ActiveRecord::Base
   include ActiveModel::Dirty
   include DateConcern
-  geocoded_by :address
 
   date_accessor(
     :startDate,
@@ -16,7 +15,6 @@ class Conference < ActiveRecord::Base
   before_validation :set_uuid, :fix_url
 
   after_create :tweet
-  after_validation :geocode
   before_save :add_related_topic
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
@@ -73,11 +71,7 @@ class Conference < ActiveRecord::Base
         endDateUnix: endDateUnix,
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
-        hasDiscount: affiliateUrl.present?,
-        "_geoloc": latitude && longitude ? {
-          lat: latitude,
-          lng: longitude,
-        } : {}
+        hasDiscount: affiliateUrl.present?
       )
   end
 
