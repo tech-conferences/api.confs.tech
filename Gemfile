@@ -9,7 +9,7 @@ end
 
 gem 'rails', '~> 5.2.3'
 gem 'loofah', '~> 2.2.1'
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
