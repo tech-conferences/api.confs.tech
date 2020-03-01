@@ -8,7 +8,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'rails', '~> 5.2.3'
-gem 'loofah', '~> 2.2.1'
+gem 'loofah', '~> 2.3.1'
 gem 'puma', '~> 3.12'
 gem 'simple_command'
 gem 'algoliasearch'
