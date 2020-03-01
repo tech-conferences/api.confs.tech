@@ -137,8 +137,9 @@ class Conference < ActiveRecord::Base
   end
 
   def tweet
+    return unless Rails.env.production?
     begin
-      TwitterWorker.new.perform(self) if Rails.env.production?
+      TwitterWorker.new.perform(self) if ENV.fetch('TWEET_CONFERENCES', false) == 'true'
     rescue => exception
     end
   end
