@@ -136,11 +136,11 @@ class Conference < ActiveRecord::Base
   end
 
   def algolia_index
-    Algolia::SyncConferences.new(self).add if Rails.env.production?
+    SyncConferenceService.new(self).add if Rails.env.production?
   end
 
   def algolia_remove
-    Algolia::SyncConferences.new(self).remove if Rails.env.production?
+    SyncConferenceService.new(self).remove if Rails.env.production?
   end
 
   def tweet
