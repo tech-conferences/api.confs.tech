@@ -1,4 +1,4 @@
-class FetchEmailConferences < ApplicationService
+class FetchEmailService < ApplicationService
   def browser
     @browser ||= Watir::Browser.new
   end
