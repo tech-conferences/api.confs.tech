@@ -26,6 +26,8 @@ gem 'uglifier'
 gem 'devise', "~> 4.7.1"
 gem 'watir'
 
+gem 'progress_bar', '~> 1.3.0'
+
 # API
 gem 'faraday'
 
@@ -50,7 +52,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'progress_bar', '~> 1.3.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
