@@ -1,6 +1,6 @@
 class Api::WebhooksController < ApiController
   def sync
-    response = Github::FetchConferences.run
+    response = FetchConferencesService.run
     render json: response
   end
 end
