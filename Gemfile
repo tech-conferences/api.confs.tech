@@ -20,7 +20,7 @@ gem 'sidekiq', '~> 4.1.3'
 
 # Ruby toolkit for the GitHub API
 gem "octokit", "~> 4.0"
-gem 'administrate'
+gem 'administrate', "~> 0.13.0"
 gem 'uglifier'
 
 gem 'devise', "~> 4.7.1"

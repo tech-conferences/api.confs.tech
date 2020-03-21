@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   devise_for :user
+
+  root to: "admin/conferences#index"
+
   namespace :admin do
     resources :conferences
     resources :topics
