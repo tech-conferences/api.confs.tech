@@ -2,7 +2,7 @@ require 'test_helper'
 
 class GithubWrapperTest < ActiveSupport::TestCase
   setup do
-    @twitter_service = Twitter::TwitterService.new
+    @twitter_service = TwitterService.new
     @conference_params = {
       name: 'Conference',
       url: 'https://web.dev',

@@ -3,6 +3,6 @@ class TwitterWorker
   sidekiq_options queue: 'default'
 
   def perform(conference)
-    Twitter::TwitterService.new.tweet(conference)
+    TwitterService.new.tweet(conference)
   end
 end

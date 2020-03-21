@@ -104,7 +104,7 @@ class Conference < ActiveRecord::Base
   end
 
   def tweet_message
-    Twitter::TwitterService.new.tweet_message(self)
+    TwitterService.new.tweet_message(self)
   end
 
   private
