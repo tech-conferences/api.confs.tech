@@ -16,6 +16,7 @@ class Conference < ActiveRecord::Base
 
   after_create :tweet
   before_save :add_related_topic
+  before_save :update_start_end_dates
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
   before_destroy :algolia_remove
@@ -38,6 +39,8 @@ class Conference < ActiveRecord::Base
         existing_conf.save!
         existing_conf
       end
+
+      existing_conf
     end
   end
 
@@ -95,11 +98,6 @@ class Conference < ActiveRecord::Base
     browser.close unless _browser
   end
 
-  def start_date
-    return nil unless startDate.length === 10
-    Date.parse(startDate)
-  end
-
   def cfp_end_date
     return nil unless cfpEndDate.present?
     Date.parse(cfpEndDate)
@@ -111,7 +109,16 @@ class Conference < ActiveRecord::Base
 
   private
 
+  def update_start_end_dates
+    begin
+      self.start_date = startDate.present? && startDate.length === 10 ? Date.parse(startDate.split(/\D/).join('-')) : nil
+      self.end_date = endDate.present? && endDate.length === 10 ? Date.parse(endDate.split(/\D/).join('-')) : nil
+    rescue
+    end
+  end
+
   def fetch_twitter_followers_count
+    return unless Rails.env.production?
     return if self.twitter.blank? or self.twitter_followers.present?
 
     begin
