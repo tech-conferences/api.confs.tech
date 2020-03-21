@@ -22,12 +22,12 @@ class ConferenceTest < ActiveSupport::TestCase
   test "add javascript topic if topic is typescript" do
     conference = Conference.new(
       conference_params(
-        url: 'lala.com/', cfpUrl: 'lala.com/', topics: [Topic.find_by_name('typescript')]
+        url: 'lala.com/', cfpUrl: 'lala.com/', topics: [Topic.find_or_create_by(name: 'typescript')]
       )
     )
     conference.save
     assert_equal 2, conference.topics.length
-    assert_includes conference.topics, Topic.find_by_name('javascript')
+    assert_includes conference.topics, Topic.find_or_create_by(name: 'javascript')
 
     # Still has 2 topics even after multiple save
     conference.save
@@ -44,7 +44,7 @@ class ConferenceTest < ActiveSupport::TestCase
       endDate: '2018-04-01',
       city: 'Nice',
       country: 'France',
-      topics: [Topic.find_by_name('javascript')]
+      topics: [Topic.find_or_create_by(name: 'javascript')]
     }.merge(extra_params)
   end
 end
