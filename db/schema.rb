@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_21_170604) do
+ActiveRecord::Schema.define(version: 2020_10_04_121214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2020_03_21_170604) do
     t.float "longitude"
     t.date "start_date"
     t.date "end_date"
+    t.string "cocUrl"
+    t.boolean "offersSignLanguageOrCC", default: false
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 

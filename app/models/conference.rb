@@ -133,6 +133,7 @@ class Conference < ActiveRecord::Base
   def fix_url
     self.url = URLHelper.fix_url(self.url) if self.url.present?
     self.cfpUrl = URLHelper.fix_url(self.cfpUrl) if self.cfpUrl.present?
+    self.cocUrl = URLHelper.fix_url(self.cocUrl) if self.cocUrl.present?
   end
 
   def algolia_index

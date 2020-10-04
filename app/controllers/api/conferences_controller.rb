@@ -83,6 +83,7 @@ class Api::ConferencesController < ApiController
     @topic = params.delete :topic
     params.delete :cfpUrl if params[:cfpUrl].blank?
     params.delete :cfpEndDate if params[:cfpEndDate].blank?
+    params.delete :cocUrl if params[:cocUrl].blank?
     params.delete :twitter if params[:twitter].blank?
     params[:name] = sanatize_name params[:name]
     params[:country] = sanatize_country_name params[:country]
@@ -122,6 +123,8 @@ class Api::ConferencesController < ApiController
       :topic,
       :cfpUrl,
       :cfpEndDate,
+      :cocUrl,
+      :offersSignLanguageOrCC,
     ).to_h
   end
 end
