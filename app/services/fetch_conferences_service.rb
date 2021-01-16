@@ -1,5 +1,5 @@
 class FetchConferencesService < ApplicationService
-  CONFERENCES_URL = 'https://raw.githubusercontent.com/tech-conferences/conference-data/master/conferences'
+  CONFERENCES_URL = 'https://raw.githubusercontent.com/tech-conferences/conference-data/main/conferences'
 
   def results
     @results ||= []

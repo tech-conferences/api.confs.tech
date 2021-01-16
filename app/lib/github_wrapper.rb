@@ -4,7 +4,7 @@ class GithubWrapper
 
   def initialize
     @repository = 'tech-conferences/conference-data'
-    @base = 'master'
+    @base = 'main'
     @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
   end
 
@@ -55,8 +55,8 @@ class GithubWrapper
 
   def head_sha
     refs = @client.refs(@repository, 'heads')
-    master_ref = refs.select{|ref| ref[:ref] == 'refs/heads/master'}[0]
-    master_ref[:object][:sha]
+    main_ref = refs.select{|ref| ref[:ref] == 'refs/heads/main'}[0]
+    main_ref[:object][:sha]
   end
 
   private
