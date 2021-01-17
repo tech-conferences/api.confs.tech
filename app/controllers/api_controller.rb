@@ -4,7 +4,8 @@ class ApiController < ActionController::Base
   private
 
   def authenticate_request
-    authenticated = params[:auth] == Rails.application.secrets.auth
+    authenticated = params[:auth] == ENV['AUTH_TOKEN']
+
     render json: { error: 'Not Authorized' }, status: 401 unless authenticated
   end
 end

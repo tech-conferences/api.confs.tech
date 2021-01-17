@@ -5,7 +5,7 @@ class GithubWrapper
   def initialize
     @repository = 'tech-conferences/conference-data'
     @base = 'main'
-    @client = Octokit::Client.new(access_token: Rails.application.secrets.github_token)
+    @client = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
   end
 
   def create_pull_request(head, title, body='')

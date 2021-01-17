@@ -14,7 +14,6 @@ gem 'simple_command'
 gem 'algoliasearch'
 gem 'chronic'
 gem 'pg'
-gem 'bugsnag'
 gem 'twitter', '~> 6.2.0'
 gem 'sidekiq', '~> 4.1.3'
 
@@ -52,6 +51,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'dotenv-rails', '2.7.6'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

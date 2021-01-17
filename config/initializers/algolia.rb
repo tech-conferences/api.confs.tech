@@ -1,4 +1,4 @@
 Algolia.init(
-  application_id: Rails.application.secrets.algolia_id || ENV['algolia_id'],
-  api_key: Rails.application.secrets.algolia_api_key || ENV['algolia_api_key']
+  application_id: ENV['ALGOLIA_APPLICATION_ID'],
+  api_key: ENV['ALGOLIA_API_KEY']
 ) if Rails.env.production?
