@@ -14,7 +14,9 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
 
-  after_create :tweet
+  # Twitter account has been disabled
+  # after_create :tweet
+
   before_save :add_related_topic
   before_save :update_start_end_dates
   after_save :algolia_index
@@ -146,8 +148,9 @@ class Conference < ActiveRecord::Base
 
   def tweet
     return unless Rails.env.production?
+
     begin
-      TwitterWorker.new.perform(self) if ENV.fetch('TWEET_CONFERENCES', false) == 'true'
+      TwitterWorker.new.perform(self)
     rescue => exception
     end
   end
