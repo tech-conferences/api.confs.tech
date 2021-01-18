@@ -28,6 +28,12 @@ class Conferences::CreationService < ApplicationService
     params[:name] = sanatize_name(params[:name])
     params[:country] = sanatize_country_name(params[:country]) if params[:country].present?
 
+    if params[:country].downcase == 'online' || params[:city].downcase == 'online'
+      params.delete(:country)
+      params.delete(:city)
+      params[:online] = true
+    end
+
     if params[:online] == true
       params.delete(:country)
       params.delete(:city)
