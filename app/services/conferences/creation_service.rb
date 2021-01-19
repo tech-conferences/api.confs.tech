@@ -101,13 +101,12 @@ class Conferences::CreationService < ApplicationService
   end
 
   def year
-    puts @params
     return Date.today.year unless @params[:startDate]
 
     @params[:startDate].split('-').first
   end
 
   def filepath
-    "conferences/#{year}/#{@params[:topic]}.json"
+    "conferences/#{year}/#{@topic}.json"
   end
 end
