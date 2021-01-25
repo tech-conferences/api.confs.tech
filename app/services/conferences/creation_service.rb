@@ -34,11 +34,6 @@ class Conferences::CreationService < ApplicationService
       params[:online] = true
     end
 
-    if params[:online] == true
-      params.delete(:country)
-      params.delete(:city)
-    end
-
     params[:url] = URLHelper.fix_url(params[:url].gsub(/\/$/, ''))
     params[:cfpUrl] = URLHelper.fix_url(params[:cfpUrl].gsub(/\/$/, '')) if params[:cfpUrl].present?
 
