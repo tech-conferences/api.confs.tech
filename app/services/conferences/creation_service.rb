@@ -34,7 +34,7 @@ class Conferences::CreationService < ApplicationService
       params[:online] = true
     end
 
-    if params[:online] == true
+    if params[:online] == true && params[:city].blank? && params[:country].blank? 
       params.delete(:country)
       params.delete(:city)
     end
