@@ -80,6 +80,7 @@ class Conferences::CreationService < ApplicationService
       Here is a new conference:
       [#{@params[:url]}](#{@params[:url]})
       #{@params[:cfpUrl].present? ? "CFP: [#{@params[:cfpUrl]}](#{@params[:cfpUrl]})" : ''}
+      #{@params[:twitter].present? ? "Twitter: [https://twitter.com/#{@params[:twitter]}](https://twitter.com/#{@params[:twitter]})" : ''}
 
       ```json
       // #{@topic}
