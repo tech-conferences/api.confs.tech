@@ -23,6 +23,7 @@ class Conferences::CreationService < ApplicationService
     params.delete(:cfpUrl) if params[:cfpUrl].blank?
     params.delete(:cfpEndDate) if params[:cfpEndDate].blank?
     params.delete(:cocUrl) if params[:cocUrl].blank?
+    params.delete(:offersSignLanguageOrCC) if params[:offersSignLanguageOrCC] == false
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
 
     params[:name] = sanatize_name(params[:name])
