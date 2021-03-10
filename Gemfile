@@ -16,7 +16,7 @@ gem 'puma', '~> 5.2.2'
 gem 'rails', '~> 6.1.3'
 gem 'sidekiq', '~> 4.1.3'
 gem 'simple_command'
-gem 'twitter', '~> 6.2.0'
+gem 'twitter', '~> 7.0.0'
 
 gem 'uglifier'
 # Ruby toolkit for the GitHub API
