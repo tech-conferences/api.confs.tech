@@ -1,18 +1,18 @@
 source 'https://rubygems.org'
 
-ruby '2.6.6'
+ruby '3.0.0'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'administrate', "~> 0.15.0"
-gem 'algoliasearch'
+gem 'administrate', '~> 0.15.0'
+gem 'algolia', '~> 2.0.4'
 gem 'chronic'
 gem 'loofah', '~> 2.3.1'
 gem 'pg'
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 5.2.2'
 gem 'rails', '~> 6.1.3'
 gem 'sidekiq', '~> 4.1.3'
 gem 'simple_command'
@@ -20,9 +20,9 @@ gem 'twitter', '~> 6.2.0'
 
 gem 'uglifier'
 # Ruby toolkit for the GitHub API
-gem "octokit", "~> 4.0"
+gem 'octokit', '~> 4.0'
 
-gem 'devise', "~> 4.7.1"
+gem 'devise', '~> 4.7.1'
 gem 'watir'
 
 gem 'progress_bar', '~> 1.3.0'
