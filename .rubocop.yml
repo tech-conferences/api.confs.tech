@@ -26,9 +26,37 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
-Layout/ArgumentAlignment:
+Layout/FirstArgumentIndentation:
+  Description: Checks the indentation of the first parameter in a method call.
   Enabled: true
-  with_fixed_indentation: true
+  EnforcedStyle: consistent
+  SupportedStyles:
+  - consistent
+  - consistent_relative_to_receiver
+  - special_for_inner_method_call
+  - special_for_inner_method_call_in_parentheses
+
+# Supports --auto-correct
+Layout/FirstArrayElementIndentation:
+  Description: Checks the indentation of the first element in an array literal.
+  Enabled: true
+  EnforcedStyle: consistent
+
+# Supports --auto-correct
+Layout/AssignmentIndentation:
+  Description: Checks the indentation of the first line of the right-hand-side of a
+    multi-line assignment.
+  Enabled: true
+
+# Supports --auto-correct
+Layout/FirstHashElementIndentation:
+  Description: Checks the indentation of the first key in a hash literal.
+  Enabled: true
+  EnforcedStyle: consistent
+  SupportedStyles:
+  - special_inside_parentheses
+  - consistent
+
 
 Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
