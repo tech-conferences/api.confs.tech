@@ -4,7 +4,7 @@ class Api::ConferencesController < ApiController
   before_action :validate_params, only: :create
 
   def create
-    conference = Conferences::CreationService.run!(params: create_params)
+    conference = Conference::CreationService.run!(params: create_params)
 
     render json: conference
   end
@@ -13,16 +13,14 @@ class Api::ConferencesController < ApiController
 
   def validate_topic
     if Topic.where(name: create_params[:topic]).length.zero?
-      render json: { error: 'topic' }, status: 422
+      render json: { error: 'topic' }, status: :unprocessable_entity
     end
   end
 
   def validate_params
     conf = Conference.new(create_params.except(:topic))
 
-    if !conf.valid?
-      render json: { error: conf.errors }, status: 422
-    end
+    render json: { error: conf.errors }, status: :unprocessable_entity unless conf.valid?
   end
 
   def create_params
@@ -39,7 +37,7 @@ class Api::ConferencesController < ApiController
       :cfpEndDate,
       :cocUrl,
       :online,
-      :offersSignLanguageOrCC,
+      :offersSignLanguageOrCC
     ).to_h
   end
 end

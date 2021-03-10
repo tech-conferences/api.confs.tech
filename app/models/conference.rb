@@ -1,4 +1,4 @@
-class Conference < ActiveRecord::Base
+class Conference < ApplicationRecord
   include ActiveModel::Dirty
   include DateConcern
 
@@ -6,12 +6,13 @@ class Conference < ActiveRecord::Base
     :startDate,
     :endDate,
     :cfpStartDate,
-    :cfpEndDate,
+    :cfpEndDate
   )
 
   has_and_belongs_to_many :topics
+
   validates :name, :url, :startDate, presence: true
-  validates :uuid, uniqueness: {case_sensitive: true}
+  validates :uuid, uniqueness: { case_sensitive: true }
   before_validation :set_uuid, :fix_url
 
   after_create :tweet
@@ -24,7 +25,7 @@ class Conference < ActiveRecord::Base
 
   def self.create_or_update(attributes, topic)
     whitelised_attributes = self.whitelised_attributes(attributes)
-    conference = self.new whitelised_attributes
+    conference = new whitelised_attributes
     conference.topics << topic
     if conference.valid?
       conference.save!
@@ -54,8 +55,13 @@ class Conference < ActiveRecord::Base
   end
 
   # Legacy mapping support
-  def date=(value); self.startDate = value; end
-  def cfpDate=(value); self.cfpStart = value; end
+  def date=(value)
+    self.startDate = value
+  end
+
+  def cfpDate=(value)
+    self.cfpStart = value
+  end
 
   def address
     if country == 'U.S.A.'
@@ -81,7 +87,7 @@ class Conference < ActiveRecord::Base
 
   def self.whitelised_attributes(attributes)
     whitelist_attr = {}
-    self.attribute_names.map do |_attr|
+    attribute_names.map do |_attr|
       whitelist_attr[_attr] = attributes[_attr] if attributes[_attr]
     end
     whitelist_attr
@@ -90,17 +96,18 @@ class Conference < ActiveRecord::Base
   @@email_regexp = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
   def fetch_emails(_browser = nil)
     browser = _browser || Watir::Browser.new
-    browser.goto self.url
+    browser.goto url
     emails = browser.body.html.scan(@@email_regexp)
-      .reject{|e| /@(1|2|3)x/.match(e) or /your?@/.match(e)  or /example.com/.match(e) }
-      .uniq
-    self.emails = emails.any? ? emails.join(';') : "contact@#{URI.parse(self.url).host}".gsub('www.', '')
-    self.save!
+                    .reject { |e| /@(1|2|3)x/.match(e) or /your?@/.match(e) or /example.com/.match(e) }
+                    .uniq
+    self.emails = emails.any? ? emails.join(';') : "contact@#{URI.parse(url).host}".gsub('www.', '')
+    save!
     browser.close unless _browser
   end
 
   def cfp_end_date
-    return nil unless cfpEndDate.present?
+    return nil if cfpEndDate.blank?
+
     Date.parse(cfpEndDate)
   end
 
@@ -111,30 +118,28 @@ class Conference < ActiveRecord::Base
   private
 
   def update_start_end_dates
-    begin
-      self.start_date = startDate.present? && startDate.length === 10 ? Date.parse(startDate.split(/\D/).join('-')) : nil
-      self.end_date = endDate.present? && endDate.length === 10 ? Date.parse(endDate.split(/\D/).join('-')) : nil
-    rescue
-    end
+    self.start_date = startDate.present? && startDate.length === 10 ? Date.parse(startDate.split(/\D/).join('-')) : nil
+    self.end_date = endDate.present? && endDate.length === 10 ? Date.parse(endDate.split(/\D/).join('-')) : nil
+  rescue StandardError
   end
 
   def fetch_twitter_followers_count
     return unless Rails.env.production?
-    return if self.twitter.blank? or self.twitter_followers.present?
+    return if twitter.blank? || twitter_followers.present?
 
     begin
-      page = Nokogiri::HTML(open("https://twitter.com/#{self.twitter}"))
+      page = Nokogiri::HTML(open("https://twitter.com/#{twitter}"))
       followers = page.css('[data-nav="followers"] .ProfileNav-value').attr('data-count').value
       self.twitter_followers = followers.to_i
-      self.save
-    rescue => e
+      save
+    rescue Exception => e
     end
   end
 
   def fix_url
-    self.url = URLHelper.fix_url(self.url) if self.url.present?
-    self.cfpUrl = URLHelper.fix_url(self.cfpUrl) if self.cfpUrl.present?
-    self.cocUrl = URLHelper.fix_url(self.cocUrl) if self.cocUrl.present?
+    self.url = URLHelper.fix_url(url) if url.present?
+    self.cfpUrl = URLHelper.fix_url(cfpUrl) if cfpUrl.present?
+    self.cocUrl = URLHelper.fix_url(cocUrl) if cocUrl.present?
   end
 
   def algolia_index
@@ -150,13 +155,14 @@ class Conference < ActiveRecord::Base
 
     begin
       TwitterWorker.new.perform(self)
-    rescue => exception
+    rescue StandardError => e
     end
   end
 
   def add_related_topic
-    related_topics = self.topics.map{ |topic| Topic.related_topic(topic) }.compact.uniq
+    related_topics = topics.map { |topic| Topic.related_topic(topic) }.compact.uniq
     return if related_topics.empty?
-    self.topics = self.topics | related_topics
+
+    self.topics = topics | related_topics
   end
 end

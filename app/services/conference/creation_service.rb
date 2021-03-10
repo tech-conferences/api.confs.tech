@@ -1,4 +1,4 @@
-class Conferences::CreationService < ApplicationService
+class Conference::CreationService < ApplicationService
   class << self
     delegate :run!, to: :new
   end
@@ -35,7 +35,7 @@ class Conferences::CreationService < ApplicationService
       params[:online] = true
     end
 
-    if params[:online] == true && params[:city].blank? && params[:country].blank? 
+    if params[:online] == true && params[:city].blank? && params[:country].blank?
       params.delete(:country)
       params.delete(:city)
     end
@@ -64,14 +64,12 @@ class Conferences::CreationService < ApplicationService
   end
 
   def file
-    begin
-      @gh_wrapper.pull_or_create_from_repo(filepath)
-    rescue => exception
-      {
-        content: nil,
-        sha: nil
-      }
-    end
+    @gh_wrapper.pull_or_create_from_repo(filepath)
+  rescue Exception => e
+    {
+      content: nil,
+      sha: nil
+    }
   end
 
   def pr_body
