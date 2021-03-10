@@ -4,7 +4,7 @@ class Api::ConferencesController < ApiController
   before_action :validate_params, only: :create
 
   def create
-    conference = Conferences::CreationService.run!(params: create_params)
+    conference = Conference::CreationService.run!(params: create_params)
 
     render json: conference
   end

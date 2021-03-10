@@ -1,4 +1,4 @@
-class Conferences::CreationService < ApplicationService
+class Conference::CreationService < ApplicationService
   class << self
     delegate :run!, to: :new
   end

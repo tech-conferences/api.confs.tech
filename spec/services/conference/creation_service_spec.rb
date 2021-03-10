@@ -1,6 +1,11 @@
-RSpec.describe Conferences::CreationService do
+RSpec.describe Conference::CreationService, type: :service do
   describe 'with bad topic' do
-    it 'fails'
+    it 'fails' do
+      stub_request(:get, 'https://api.github.com/repos/tech-conferences/conference-data/git/refs/heads')
+        .to_return(status: 200, body: {}.to_json, headers: {})
+
+      # subject.run!(params: conference_params)
+    end
   end
 
   describe 'with bad dates' do
