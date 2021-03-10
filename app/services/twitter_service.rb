@@ -4,7 +4,7 @@ class TwitterService < ApplicationService
   def tweet(conference)
     return unless Rails.env.production?
     return if conference.tweeted_at.present?
-    return if conference.start_date.nil? || (conference.start_date < Date.today)
+    return if conference.start_date.nil? || (conference.start_date < Time.zone.today)
 
     client.update(tweet_message(conference))
 
@@ -13,26 +13,14 @@ class TwitterService < ApplicationService
   end
 
   def tweet_message(conference)
-    # Name & date
-    tweet = "#{conference.name} is happening on #{conference.start_date.strftime('%B, %-d')}."
+    tweet = <<~PRBODY
+      #{conference.name} is happening on #{conference.start_date.strftime('%B, %-d')}.
+      #{location(conference)}
+      — #{conference.url}
+      #tech #conference #{topics(conference).map { |topic| "##{topic.name}" }.join(' ')}
 
-    # Location
-    tweet << "\n📍 "
-    tweet << "#{conference.city}, #{conference.country}" if conference.city && conference.country
-    tweet << ' & ' if conference.online? && conference.country
-    tweet << 'Online' if conference.online?
-
-    # Url
-    tweet << "\n— #{conference.url}"
-
-    # Cfp
-    if conference.cfpUrl.present? && conference.cfp_end_date.present?
-      tweet << "\n\nSubmit your proposal for a talk at #{conference.cfpUrl} before #{conference.cfp_end_date.strftime('%B, %-d')}."
-    end
-
-    # Hashtags
-    topics = conference.topics.reject { |topic| topic.name == 'general' }
-    tweet << "\n#tech #conference #{topics.map { |topic| "##{topic.name}" }.join(' ')}"
+      #{cfp(conference)}
+    PRBODY
 
     tweet.strip
   end
@@ -48,13 +36,23 @@ class TwitterService < ApplicationService
     end
   end
 
-  def confs_url(conference)
-    main_topic = conference.topics.first
-    topics = conference.topics.map(&:name).join('%2B')
-    "https://confs.tech/#{main_topic.name}?topics=#{topics}##{conf_id(conference)}"
+  def location(conference)
+    location = '📍 '
+
+    location << "#{conference.city}, #{conference.country}" if conference.city && conference.country
+    location << ' & ' if conference.online? && conference.country
+    location << 'Online' if conference.online?
+
+    location
   end
 
-  def conf_id(conference)
-    "#{conference.name.downcase.tr(' ', '-')}-#{conference.start_date}"
+  def topics(conference)
+    conference.topics.reject { |topic| topic.name == 'general' }
+  end
+
+  def cfp(conference)
+    return nil if conference.cfpUrl.blank? || conference.cfp_end_date.blank?
+
+    "Submit your proposal for a talk at #{conference.cfpUrl} before #{conference.cfp_end_date.strftime('%B, %-d')}."
   end
 end

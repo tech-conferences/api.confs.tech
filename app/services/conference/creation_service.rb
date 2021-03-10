@@ -101,7 +101,7 @@ class Conference::CreationService < ApplicationService
   end
 
   def year
-    return Date.today.year unless @params[:startDate]
+    return Time.zone.today.year unless @params[:startDate]
 
     @params[:startDate].split('-').first
   end
