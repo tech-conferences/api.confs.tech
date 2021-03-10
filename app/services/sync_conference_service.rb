@@ -4,9 +4,7 @@ class SyncConferenceService < ApplicationService
   end
 
   def add
-    index.save_object({
-      objectID: @conference.uuid
-    }.merge(@conference.attributes))
+    index.save_object(@conference.as_json)
   end
 
   def remove
