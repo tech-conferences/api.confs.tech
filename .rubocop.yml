@@ -26,6 +26,10 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
+Layout/ArgumentAlignment:
+  Enabled: true
+  with_fixed_indentation: true
+
 Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
 

@@ -1,5 +1,4 @@
 class GithubWrapper
-
   attr_accessor(:repository, :base, :client)
 
   def initialize
@@ -8,7 +7,7 @@ class GithubWrapper
     @client = Octokit::Client.new(access_token: ENV['GITHUB_TOKEN'])
   end
 
-  def create_pull_request(head, title, body='')
+  def create_pull_request(head, title, body = '')
     {
       status: @client.last_response.status,
       data: @client.create_pull_request(@repository, @base, head, title, body)
@@ -36,15 +35,15 @@ class GithubWrapper
   end
 
   def pull_or_create_from_repo(path)
-    @client.contents(@repository, path: path, query: {ref: @base})
+    @client.contents(@repository, path: path, query: { ref: @base })
   end
 
   def update(encoded, content = nil)
     conferences_json = if encoded.present?
-      JSON.parse(Base64.decode64(encoded))
-    else
-      []
-    end
+                        JSON.parse(Base64.decode64(encoded))
+                      else
+                        []
+                      end
 
     return conferences_json if content.blank?
 
@@ -55,19 +54,17 @@ class GithubWrapper
 
   def head_sha
     refs = @client.refs(@repository, 'heads')
-    main_ref = refs.select{|ref| ref[:ref] == 'refs/heads/main'}[0]
+    main_ref = refs.select { |ref| ref[:ref] == 'refs/heads/main' }[0]
     main_ref[:object][:sha]
   end
 
   private
 
   def order_confs(confs)
-    begin
-      confs.sort_by do |conf|
-        Conference.new(Conference.whitelised_attributes(conf)).start_date
-      end
-    rescue => exception
-      confs
+    confs.sort_by do |conf|
+      Conference.new(Conference.whitelised_attributes(conf)).start_date
     end
+  rescue StandardError => e
+    confs
   end
 end
