@@ -1,21 +1,24 @@
 class SyncConferenceService < ApplicationService
-
   def initialize(conference)
     @conference = conference
   end
 
   def add
-    algolia.add_object(@conference)
+    index.save_object({
+      objectID: @conference.uuid
+    }.merge(@conference.attributes))
   end
 
   def remove
-    algolia.delete_object(@conference.uuid)
+    index.delete_object(@conference.uuid)
   end
 
   private
 
-  def algolia
-    @@algolia ||= Algolia::Index.new(index_name)
+  def index
+    client = Algolia::Search::Client.create(ENV['ALGOLIA_APPLICATION_ID'], ENV['ALGOLIA_API_KEY'])
+
+    @index = client.init_index(index_name)
   end
 
   def index_name
