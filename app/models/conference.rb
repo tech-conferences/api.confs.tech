@@ -14,8 +14,7 @@ class Conference < ActiveRecord::Base
   validates :uuid, uniqueness: {case_sensitive: true}
   before_validation :set_uuid, :fix_url
 
-  # Twitter account has been disabled
-  # after_create :tweet
+  after_create :tweet
 
   before_save :add_related_topic
   before_save :update_start_end_dates
