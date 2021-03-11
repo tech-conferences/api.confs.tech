@@ -54,7 +54,7 @@ class GithubWrapper
 
   def head_sha
     refs = @client.refs(@repository, 'heads')
-    main_ref = refs.select { |ref| ref[:ref] == 'refs/heads/main' }[0]
+    main_ref = refs.find { |ref| ref[:ref] == 'refs/heads/main' }
     main_ref[:object][:sha]
   end
 

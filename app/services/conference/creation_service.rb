@@ -73,26 +73,25 @@ class Conference::CreationService < ApplicationService
   end
 
   def pr_body
-    <<~PRBODY
-      Hey there, it's ConfsBot! 👋🏼
+    @pr_body ||= <<~PRBODY
+      ## Conference information
 
-      Here is a new conference:
-      [#{@params[:url]}](#{@params[:url]})
-      #{@params[:cfpUrl].present? ? "CFP: [#{@params[:cfpUrl]}](#{@params[:cfpUrl]})" : ''}
-      #{@params[:twitter].present? ? "Twitter: [https://twitter.com/#{@params[:twitter]}](https://twitter.com/#{@params[:twitter]})" : ''}
+      Website: <a href="#{@params[:url]}" target="_blank">#{@params[:url]}</a>
+      #{cfp_url}
+      #{twitter_url}
 
       ```json
       // #{@topic}
 
       #{JSON.pretty_generate(@params)}
       ```
-      #{@params[:comment] ? '--' : ''}
-      #{@params[:comment]}
     PRBODY
+
+    @pr_body.strip
   end
 
   def commit_message
-    "Add #{@params[:name]} conference"
+    "Add #{@params[:name]}"
   end
 
   # Random name to prevent branch name collision
@@ -108,5 +107,17 @@ class Conference::CreationService < ApplicationService
 
   def filepath
     "conferences/#{year}/#{@topic}.json"
+  end
+
+  def twitter_url
+    return nil if @params[:twitter].blank?
+
+    "Twitter: <a href=\"https://twitter.com/#{@params[:twitter]}\" target=\"_blank\">https://twitter.com/#{@params[:twitter]}</a>"
+  end
+
+  def cfp_url
+    return nil if @params[:cfpUrl].blank?
+
+    "CFP: <a href=\"#{@params[:cfpUrl]}\" target=\"_blank\">#{@params[:cfpUrl]}</a>"
   end
 end
