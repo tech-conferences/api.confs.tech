@@ -36,7 +36,7 @@ RSpec.describe TwitterService, type: :service do
         — https://web.dev
         #tech #conference #ux
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe TwitterService, type: :service do
         — https://web.dev
         #tech #conference #ux
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe TwitterService, type: :service do
         — https://web.dev
         #tech #conference
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
   end
 
@@ -80,7 +80,7 @@ RSpec.describe TwitterService, type: :service do
         — https://web.dev
         #tech #conference #ux
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
 
     it 'shows 2 topics' do
@@ -92,7 +92,7 @@ RSpec.describe TwitterService, type: :service do
         — https://web.dev
         #tech #conference #ux #javascript
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
   end
 
@@ -114,7 +114,7 @@ RSpec.describe TwitterService, type: :service do
 
         Submit your proposal for a talk at cfp.web.dev before January, 1.
       PRBODY
-      expect(expected_message.strip).to eq tweet
+      expect(tweet).to eq expected_message.strip
     end
   end
 end
