@@ -27,7 +27,7 @@ class Conference::CreationService < ApplicationService
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
 
     params[:name] = sanatize_name(params[:name])
-    params[:country] = sanatize_country_name(params[:country]) if params[:country].present?
+    params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
 
     if params[:country].downcase == 'online' || params[:city].downcase == 'online'
       params.delete(:country)
@@ -48,19 +48,6 @@ class Conference::CreationService < ApplicationService
 
   def sanatize_name(name)
     name.gsub(year, '').strip
-  end
-
-  def sanatize_country_name(country_name)
-    case country_name.downcase
-    when 'the netherlands', 'nl'
-      return 'Netherlands'
-    when 'u.s.', 'us', 'usa', 'u.s.a', 'united states', 'united states of america'
-      return 'U.S.A.'
-    when 'uk', 'uk.', 'u.k', 'uk', 'united kingdom', 'england'
-      return 'U.K.'
-    end
-
-    country_name
   end
 
   def file
