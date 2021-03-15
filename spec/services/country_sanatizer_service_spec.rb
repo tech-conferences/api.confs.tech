@@ -18,4 +18,12 @@ RSpec.describe CountrySanatizerService, type: :service do
       expect(subject).to eq 'U.S.A.'
     end
   end
+
+  context 'capitalization' do
+    let(:country) { 'canada' }
+
+    it 'capitalize the country name' do
+      expect(subject).to eq 'Canada'
+    end
+  end
 end

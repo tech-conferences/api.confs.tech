@@ -15,6 +15,6 @@ class CountrySanatizerService < ApplicationService
       return 'Germany'
     end
 
-    country_name
+    country_name.humanize
   end
 end
