@@ -15,6 +15,8 @@ class CountrySanatizerService < ApplicationService
       return 'Germany'
     when 'korea'
       return 'South Korea'
+    when 'uae', 'u.a.e.'
+      return 'United Arab Emirates'
     end
 
     country_name.humanize
