@@ -147,6 +147,8 @@ class CitySanatizerService < ApplicationService
   }.freeze
 
   def run!(city, country)
+    return 'online' if city.downcase == 'online'
+
     # Add state if the city is in the US
     # See: https://github.com/tech-conferences/conference-data/blob/main/config/validLocations.js
     return US_CITY_NAME_WITH_STATE[city.downcase.to_sym] || city.titleize if country == 'U.S.A.'

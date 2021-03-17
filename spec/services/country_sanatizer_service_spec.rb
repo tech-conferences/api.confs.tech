@@ -3,6 +3,14 @@ RSpec.describe CountrySanatizerService, type: :service do
     CountrySanatizerService.run!(country)
   end
 
+  context 'is online' do
+    let(:country) { 'Online' }
+
+    it 'returns online' do
+      expect(subject).to eq 'online'
+    end
+  end
+
   context 'country not in the list' do
     let(:country) { 'Nope' }
 

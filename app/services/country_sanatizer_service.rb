@@ -4,6 +4,8 @@ class CountrySanatizerService < ApplicationService
   end
 
   def run!(country)
+    return 'online' if country.downcase == 'online'
+
     case country.downcase
     when 'the netherlands', 'nl'
       return 'Netherlands'

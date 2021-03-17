@@ -5,6 +5,14 @@ RSpec.describe CitySanatizerService, type: :service do
     CitySanatizerService.run!(city, country)
   end
 
+  context 'is online' do
+    let(:city) { 'Online' }
+
+    it 'returns online' do
+      expect(subject).to eq 'online'
+    end
+  end
+
   context 'city is Munchen' do
     let(:city) { 'München' }
 

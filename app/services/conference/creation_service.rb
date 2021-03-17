@@ -30,7 +30,7 @@ class Conference::CreationService < ApplicationService
     params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
     params[:city] = CitySanatizerService.run!(params[:city], params[:country]) if params[:city].present?
 
-    if params[:country].downcase == 'online' || params[:city].downcase == 'online'
+    if params[:country] == 'online' || params[:city] == 'online'
       params.delete(:country)
       params.delete(:city)
       params[:online] = true
