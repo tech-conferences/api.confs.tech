@@ -3,8 +3,8 @@ class CountrySanatizerService < ApplicationService
     delegate :run!, to: :new
   end
 
-  def run!(country_name)
-    case country_name.downcase
+  def run!(country)
+    case country.downcase
     when 'the netherlands', 'nl'
       return 'Netherlands'
     when 'u.s.', 'us', 'usa', 'u.s.a', 'united states', 'united states of america'
@@ -17,8 +17,10 @@ class CountrySanatizerService < ApplicationService
       return 'South Korea'
     when 'uae', 'u.a.e.'
       return 'United Arab Emirates'
+    when 'columbia'
+      return 'Colombia'
     end
 
-    country_name.humanize
+    country.titleize
   end
 end
