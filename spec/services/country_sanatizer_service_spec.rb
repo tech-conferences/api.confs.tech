@@ -4,7 +4,7 @@ RSpec.describe CountrySanatizerService, type: :service do
   end
 
   context 'country not in the list' do
-    let(:country) { 'Not in the list' }
+    let(:country) { 'Nope' }
 
     it 'returns the country when not in the list' do
       expect(subject).to eq country
@@ -20,10 +20,10 @@ RSpec.describe CountrySanatizerService, type: :service do
   end
 
   context 'capitalization' do
-    let(:country) { 'canada' }
+    let(:country) { 'south korea' }
 
     it 'capitalize the country name' do
-      expect(subject).to eq 'Canada'
+      expect(subject).to eq 'South Korea'
     end
   end
 end
