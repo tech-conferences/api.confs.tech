@@ -6,7 +6,7 @@ class Api::ConferencesController < ApiController
   before_action :validate_params, only: :create
 
   def index
-    @conferences = Conference.last(15)
+    @conferences = Conference.first(15)
     rss = RSS::Maker.make('2.0') do |maker|
       maker.channel.author = 'Nima Izadi / https://twitter.com/nimz_co'
       maker.channel.updated = @conferences.first.created_at.to_time.to_s

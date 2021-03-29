@@ -2,7 +2,7 @@ class Conference < ApplicationRecord
   include ActiveModel::Dirty
   include DateConcern
 
-  default_scope { order(created_at: :asc) }
+  default_scope { order(created_at: :desc) }
 
   date_accessor(
     :startDate,
