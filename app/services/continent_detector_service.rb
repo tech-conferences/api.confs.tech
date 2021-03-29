@@ -5,6 +5,7 @@ class ContinentDetectorService < ApplicationService
   CONTINENTS = {
     'Africa': [
       'Egypt',
+      'Ethiopia',
       'Ghana',
       'Kenya',
       'Mauritius',
@@ -29,7 +30,6 @@ class ContinentDetectorService < ApplicationService
       'Czech Republic',
       'Denmark',
       'Estonia',
-      'Ethiopia',
       'Finland',
       'France',
       'Germany',
