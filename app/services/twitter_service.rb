@@ -15,7 +15,7 @@ class TwitterService < ApplicationService
   def tweet_message(conference)
     tweet = <<~PRBODY
       #{conference.name} is happening on #{conference.start_date.strftime('%B, %-d')}.
-      #{location(conference)}
+      #{conference.location_to_s}
       — #{conference.url}
       #tech #conference #{topics(conference).map { |topic| "##{topic.name}" }.join(' ')}
 
@@ -34,16 +34,6 @@ class TwitterService < ApplicationService
       config.access_token        = ENV['TWITTER_ACCESS_TOKEN']
       config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
     end
-  end
-
-  def location(conference)
-    location = '📍 '
-
-    location << "#{conference.city}, #{conference.country}" if conference.city && conference.country
-    location << ' & ' if conference.online? && conference.country
-    location << 'Online' if conference.online?
-
-    location
   end
 
   def topics(conference)
