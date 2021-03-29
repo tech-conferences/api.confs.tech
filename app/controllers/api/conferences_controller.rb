@@ -1,7 +1,32 @@
+require 'rss'
+
 class Api::ConferencesController < ApiController
   skip_before_action :authenticate_request
   before_action :validate_topic, only: :create
   before_action :validate_params, only: :create
+
+  def index
+    @conferences = Conference.last(15)
+    rss = RSS::Maker.make('2.0') do |maker|
+      maker.channel.author = 'Nima Izadi / https://twitter.com/nimz_co'
+      maker.channel.updated = @conferences.first.created_at.to_time.to_s
+      maker.channel.link = 'https://confs.tech/rss'
+      maker.channel.description = 'Confs.tech | List of tech conferences: JavaScript, UX / Design, Ruby'
+      maker.channel.title = 'Confs.tech'
+
+      @conferences.map do |conference|
+        maker.items.new_item do |item|
+          item.link = conference.url
+          item.title = conference.name
+          item.description = "#{conference.location_to_s} | #{conference.start_date.strftime('%B, %-d')}"
+          item.description += " | #{conference.topics.map{ |t| "##{t.name}" }.join(', ')}"
+          item.pubDate = conference.start_date.to_s
+        end
+      end
+    end
+
+    render json: rss.to_s
+  end
 
   def create
     conference = Conference::CreationService.run!(params: create_params)

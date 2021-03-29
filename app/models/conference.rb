@@ -2,6 +2,8 @@ class Conference < ApplicationRecord
   include ActiveModel::Dirty
   include DateConcern
 
+  default_scope { order(created_at: :asc) }
+
   date_accessor(
     :startDate,
     :endDate,
@@ -113,6 +115,16 @@ class Conference < ApplicationRecord
 
   def tweet_message
     TwitterService.new.tweet_message(self)
+  end
+
+  def location_to_s
+    location = '📍 '
+
+    location << "#{city}, #{country}" if city && country
+    location << ' & ' if online? && country
+    location << 'Online' if online?
+
+    location
   end
 
   private

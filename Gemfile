@@ -18,6 +18,8 @@ gem 'sidekiq', '~> 4.1.3'
 gem 'simple_command'
 gem 'twitter', '~> 7.0.0'
 
+gem 'rss', '~> 0.2.9'
+
 gem 'uglifier'
 # Ruby toolkit for the GitHub API
 gem 'octokit', '~> 4.0'
