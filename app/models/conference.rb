@@ -83,7 +83,8 @@ class Conference < ApplicationRecord
         endDateUnix: endDateUnix,
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
-        hasDiscount: affiliateUrl.present?
+        hasDiscount: affiliateUrl.present?,
+        continent: continent
       )
   end
 
@@ -128,6 +129,10 @@ class Conference < ApplicationRecord
   end
 
   private
+
+  def continent
+    ContinentDetectorService.run!(country)
+  end
 
   def update_start_end_dates
     self.start_date = startDate.present? && startDate.length === 10 ? Date.parse(startDate.split(/\D/).join('-')) : nil
