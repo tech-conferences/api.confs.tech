@@ -73,7 +73,7 @@ class Api::ConferencesController < ApiController
       :twitter,
       :topic,
       :cocUrl,
-      :offersSignLanguageOrCC
+      :offersSignLanguageOrCC,
       :url
     ).to_h
   end
