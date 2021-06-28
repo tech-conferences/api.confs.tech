@@ -63,18 +63,18 @@ class Api::ConferencesController < ApiController
   def create_params
     params.permit(
       :name,
-      :url,
       :startDate,
       :endDate,
       :city,
       :country,
-      :twitter,
-      :topic,
+      :online,
       :cfpUrl,
       :cfpEndDate,
+      :twitter,
+      :topic,
       :cocUrl,
-      :online,
       :offersSignLanguageOrCC
+      :url
     ).to_h
   end
 end
