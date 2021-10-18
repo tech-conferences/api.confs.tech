@@ -2,7 +2,7 @@ require 'rss'
 
 class Api::ConferencesController < ApiController
   skip_before_action :authenticate_request
-  before_action :validate_topic, only: :create
+  before_action :validate_topics, only: :create
   before_action :validate_params, only: :create
 
   def index
@@ -36,14 +36,20 @@ class Api::ConferencesController < ApiController
 
   private
 
-  def validate_topic
-    if Topic.where(name: create_params[:topic]).length.zero?
+  def validate_topics
+    create_params[:topics].detect do |topic|
+      if Topic.where(name: topic).length.zero?
+        render json: { error: 'topic' }, status: :unprocessable_entity
+      end
+    end
+
+    if create_params[:topics].length.zero?
       render json: { error: 'topic' }, status: :unprocessable_entity
     end
   end
 
   def validate_params
-    conf = Conference.new(create_params.except(:topic))
+    conf = Conference.new(create_params.except(:topics))
 
     render json: { error: conf.errors }, status: :unprocessable_entity unless conf.valid?
   end
@@ -71,10 +77,10 @@ class Api::ConferencesController < ApiController
       :cfpUrl,
       :cfpEndDate,
       :twitter,
-      :topic,
       :cocUrl,
       :offersSignLanguageOrCC,
-      :url
+      :url,
+      topics: []
     ).to_h
   end
 end

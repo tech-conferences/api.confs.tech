@@ -9,16 +9,20 @@ class Conference::CreationService < ApplicationService
 
     @gh_wrapper ||= ::GithubWrapper.new
 
-    commit_content = @gh_wrapper.update(file[:content], @params)
-    @gh_wrapper.create_commit(commit_message, filepath, file[:sha], commit_content, branch_name)
+    @gh_wrapper.create_branch(branch_name)
 
-    @gh_wrapper.create_pull_request(branch_name, commit_message, pr_body)
+    @topics.map do |topic|
+      commit_content = @gh_wrapper.update(file(topic)[:content], @params)
+      @gh_wrapper.create_commit(commit_message(topic), filepath(topic), file(topic)[:sha], commit_content, branch_name)
+    end
+
+    @gh_wrapper.create_pull_request(branch_name, pr_message, pr_body)
   end
 
   private
 
   def sanatize_params(params)
-    @topic = params.delete :topic
+    @topics = params.delete :topics
 
     params.delete(:cfpUrl) if params[:cfpUrl].blank?
     params.delete(:cfpEndDate) if params[:cfpEndDate].blank?
@@ -51,8 +55,8 @@ class Conference::CreationService < ApplicationService
     name.gsub(year, '').strip
   end
 
-  def file
-    @gh_wrapper.pull_or_create_from_repo(filepath)
+  def file(topic)
+    @gh_wrapper.pull_or_create_from_repo(filepath(topic))
   rescue Exception => e
     {
       content: nil,
@@ -69,7 +73,7 @@ class Conference::CreationService < ApplicationService
       #{twitter_url}
 
       ```json
-      // #{@topic}
+      // #{@topics.join(', ')}
 
       #{JSON.pretty_generate(@params)}
       ```
@@ -78,8 +82,12 @@ class Conference::CreationService < ApplicationService
     @pr_body.strip
   end
 
-  def commit_message
-    "Add #{@params[:name]}"
+  def commit_message(topic)
+    "Add #{@params[:name]} for #{topic}"
+  end
+
+  def pr_message
+    "Add #{@params[:name]} for #{@topics.join(', ')}"
   end
 
   # Random name to prevent branch name collision
@@ -93,8 +101,8 @@ class Conference::CreationService < ApplicationService
     @params[:startDate].split('-').first
   end
 
-  def filepath
-    "conferences/#{year}/#{@topic}.json"
+  def filepath(topic)
+    "conferences/#{year}/#{topic}.json"
   end
 
   def twitter_url

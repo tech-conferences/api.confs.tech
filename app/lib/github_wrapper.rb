@@ -15,8 +15,6 @@ class GithubWrapper
   end
 
   def create_commit(message, path, sha, content, branch)
-    create_branch(branch)
-
     @client.update_contents(
       @repository,
       path,
