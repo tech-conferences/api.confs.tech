@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :conferences, only: [:create, :index]
+    resources :conferences, only: [:create, :index] do
+      collection do
+        get :cfp
+      end
+    end
     get '/webhooks/sync', to: 'webhooks#sync'
   end
 end
