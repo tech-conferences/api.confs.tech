@@ -80,6 +80,7 @@ class Api::ConferencesController < ApiController
       :cocUrl,
       :offersSignLanguageOrCC,
       :url,
+      :locales,
       topics: []
     ).to_h
   end

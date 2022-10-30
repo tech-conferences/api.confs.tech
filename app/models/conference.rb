@@ -17,13 +17,15 @@ class Conference < ApplicationRecord
   validates :uuid, uniqueness: { case_sensitive: true }
   before_validation :set_uuid, :fix_url
 
-  after_create :tweet
-
   before_save :add_related_topic
   before_save :update_start_end_dates
+
+  after_create :tweet
+
+  before_destroy :algolia_remove
+
   after_save :algolia_index
   after_save :fetch_twitter_followers_count
-  before_destroy :algolia_remove
 
   def self.create_or_update(attributes, topic)
     whitelised_attributes = self.whitelised_attributes(attributes)
