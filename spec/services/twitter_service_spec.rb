@@ -104,8 +104,9 @@ RSpec.describe TwitterService, type: :service do
       })
     }
 
-    it 'specifies the cfp dates' do
+    it 'specifies the cfp dates if cfp_end_date is in the future' do
       conference.topics << Topic.new(name: 'ux')
+      conference.cfpEndDate = '2099-01-01'
       expected_message = <<~PRBODY
         Conference is happening on January, 1.
         📍 Nice, France
@@ -113,6 +114,17 @@ RSpec.describe TwitterService, type: :service do
         #tech #conference #ux
 
         Submit your proposal for a talk at cfp.web.dev before January, 1.
+      PRBODY
+      expect(tweet).to eq expected_message.strip
+    end
+
+    it 'does not specifies the cfp if it is in the past' do
+      conference.topics << Topic.new(name: 'ux')
+      expected_message = <<~PRBODY
+        Conference is happening on January, 1.
+        📍 Nice, France
+        — https://web.dev
+        #tech #conference #ux
       PRBODY
       expect(tweet).to eq expected_message.strip
     end

@@ -42,6 +42,7 @@ class TwitterService < ApplicationService
 
   def cfp(conference)
     return nil if conference.cfpUrl.blank? || conference.cfp_end_date.blank?
+    return nil if conference.cfp_end_date < Date.today
 
     "Submit your proposal for a talk at #{conference.cfpUrl} before #{conference.cfp_end_date.strftime('%B, %-d')}."
   end
