@@ -86,7 +86,8 @@ class Conference < ApplicationRecord
         cfpStartDateUnix: cfpStartDateUnix,
         cfpEndDateUnix: cfpEndDateUnix,
         hasDiscount: affiliateUrl.present?,
-        continent: continent
+        continent: continent,
+        locales: (locales || 'EN').split(',')
       )
   end
 
