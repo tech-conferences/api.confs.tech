@@ -60,7 +60,8 @@ class GithubWrapper
 
   def order_confs(confs)
     confs.sort_by do |conf|
-      Conference.new(Conference.whitelised_attributes(conf)).start_date
+      start_date = conf.stringify_keys["startDate"]
+      start_date.present? && start_date.length === 10 ? Date.parse(start_date.split(/\D/).join('-')) : nil
     end
   rescue StandardError => e
     confs
