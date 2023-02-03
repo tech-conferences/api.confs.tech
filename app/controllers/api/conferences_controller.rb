@@ -79,8 +79,8 @@ class Api::ConferencesController < ApiController
       :cfpEndDate,
       :twitter,
       :cocUrl,
-      :offersSignLanguageOrCC,
       :locales,
+      :offersSignLanguageOrCC,
       topics: []
     ).to_h
   end
