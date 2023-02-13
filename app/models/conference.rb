@@ -51,7 +51,8 @@ class Conference < ApplicationRecord
   end
 
   def get_uuid
-    Digest::SHA1.base64digest "#{URI.parse(url).host}-#{URI.parse(url).path}-#{startDate[0..6]}-#{city}"
+    uuid_attrs = [URI.parse(url).host, URI.parse(url).path, startDate[0..6], city, offersSignLanguageOrCC, online]
+    Digest::SHA1.base64digest uuid_attrs.join('-')
   end
 
   def set_uuid
