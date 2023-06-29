@@ -72,6 +72,8 @@ class Conference::CreationService < ApplicationService
       #{cfp_url}
       #{twitter_url}
 
+      Contact: @#{@params[:contactGithubUsername]}
+
       ```json
       // #{@topics.join(', ')}
 
