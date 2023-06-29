@@ -71,6 +71,7 @@ class Conference::CreationService < ApplicationService
       Website: <a href="#{@params[:url]}" target="_blank">#{@params[:url]}</a>
       #{cfp_url}
       #{twitter_url}
+      #{github_url}
 
       ```json
       // #{@topics.join(', ')}
@@ -109,6 +110,12 @@ class Conference::CreationService < ApplicationService
     return nil if @params[:twitter].blank?
 
     "Twitter: <a href=\"https://twitter.com/#{@params[:twitter]}\" target=\"_blank\">https://twitter.com/#{@params[:twitter]}</a>"
+  end
+
+  def github_url
+    return nil if @params[:github].blank?
+
+    "Github: <a href=\"https://github.com/#{@params[:github]}\" target=\"_blank\">https://github.com/#{@params[:github]}</a>"
   end
 
   def cfp_url
