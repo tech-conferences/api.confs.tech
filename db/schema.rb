@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_30_144652) do
+ActiveRecord::Schema.define(version: 2023_06_29_230840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 2022_10_30_144652) do
     t.boolean "offersSignLanguageOrCC", default: false
     t.boolean "online", default: false
     t.string "locales"
+    t.string "github"
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 
