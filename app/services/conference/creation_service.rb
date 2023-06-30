@@ -115,7 +115,7 @@ class Conference::CreationService < ApplicationService
   def github_url
     return nil if @params[:github].blank?
 
-    "Github: <a href=\"https://github.com/#{@params[:github]}\" target=\"_blank\">https://github.com/#{@params[:github]}</a>"
+    "Github: @#{@params[:github]}"
   end
 
   def cfp_url
