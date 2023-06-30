@@ -29,6 +29,7 @@ class Conference::CreationService < ApplicationService
     params.delete(:cocUrl) if params[:cocUrl].blank?
     params.delete(:offersSignLanguageOrCC) if params[:offersSignLanguageOrCC] == false
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
+    params.delete(:github) if params[:github].blank?
 
     params[:name] = sanatize_name(params[:name])
     params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
