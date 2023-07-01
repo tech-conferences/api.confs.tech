@@ -23,13 +23,13 @@ class Conference::CreationService < ApplicationService
 
   def sanatize_params(params)
     @topics = params.delete :topics
+    @github = params.delete :github
 
     params.delete(:cfpUrl) if params[:cfpUrl].blank?
     params.delete(:cfpEndDate) if params[:cfpEndDate].blank?
     params.delete(:cocUrl) if params[:cocUrl].blank?
     params.delete(:offersSignLanguageOrCC) if params[:offersSignLanguageOrCC] == false
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
-    params.delete(:github) if params[:github].blank?
 
     params[:name] = sanatize_name(params[:name])
     params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
@@ -114,9 +114,9 @@ class Conference::CreationService < ApplicationService
   end
 
   def github_url
-    return nil if @params[:github].blank?
+    return nil if @github.blank?
 
-    "Github: @#{@params[:github]}"
+    "Github: @#{@github}"
   end
 
   def cfp_url
