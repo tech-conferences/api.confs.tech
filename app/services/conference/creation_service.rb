@@ -24,6 +24,7 @@ class Conference::CreationService < ApplicationService
   def sanatize_params(params)
     @topics = params.delete :topics
     @github = params.delete :github
+    @mastodon = params.delete :mastodon
 
     params.delete(:cfpUrl) if params[:cfpUrl].blank?
     params.delete(:cfpEndDate) if params[:cfpEndDate].blank?
@@ -73,6 +74,7 @@ class Conference::CreationService < ApplicationService
       #{cfp_url}
       #{twitter_url}
       #{github_url}
+      #{mastodon_url}
 
       ```json
       // #{@topics.join(', ')}
@@ -123,5 +125,11 @@ class Conference::CreationService < ApplicationService
     return nil if @params[:cfpUrl].blank?
 
     "CFP: <a href=\"#{@params[:cfpUrl]}\" target=\"_blank\">#{@params[:cfpUrl]}</a>"
+  end
+
+  def mastodon_url
+    return nil if @mastodon.blank?
+    _, username, instance = @mastodon.split('@')
+    "Mastodon: <a href=\"https://#{instance}/@#{username}\" target=\"_blank\">https://#{instance}/@#{username}</a>"
   end
 end
