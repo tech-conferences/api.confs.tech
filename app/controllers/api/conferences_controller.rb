@@ -78,6 +78,7 @@ class Api::ConferencesController < ApiController
       :cfpUrl,
       :cfpEndDate,
       :twitter,
+      :mastodon,
       :github,
       :cocUrl,
       :locales,
