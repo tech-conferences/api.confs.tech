@@ -30,6 +30,7 @@ class Conference::CreationService < ApplicationService
     params.delete(:cocUrl) if params[:cocUrl].blank?
     params.delete(:offersSignLanguageOrCC) if params[:offersSignLanguageOrCC] == false
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
+    params.delete(:mastodon) if params[:mastodon].blank?
 
     params[:name] = sanatize_name(params[:name])
     params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
@@ -72,6 +73,7 @@ class Conference::CreationService < ApplicationService
       Website: <a href="#{@params[:url]}" target="_blank">#{@params[:url]}</a>
       #{cfp_url}
       #{twitter_url}
+      #{@params[:mastodon]}
       #{github_url}
 
       ```json
