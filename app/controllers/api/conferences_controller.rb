@@ -98,14 +98,14 @@ class Api::ConferencesController < ApiController
       :city,
       :country,
       :online,
+      :locales,
+      :offersSignLanguageOrCC,
+      :cocUrl,
       :cfpUrl,
       :cfpEndDate,
       :twitter,
-      :mastodon,
       :github,
-      :cocUrl,
-      :locales,
-      :offersSignLanguageOrCC,
+      :mastodon,
       topics: []
     ).to_h
   end
