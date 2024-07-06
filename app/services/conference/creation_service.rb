@@ -66,7 +66,7 @@ class Conference::CreationService < ApplicationService
       Website: <a href="#{@params[:url]}" target="_blank">#{@params[:url]}</a>
       #{cfp_url}
       #{twitter_url}
-      #{@params[:mastodon]}
+      #{mastodon_url}
       #{github_url}
 
       ```json
@@ -106,6 +106,12 @@ class Conference::CreationService < ApplicationService
     return nil if @params[:twitter].blank?
 
     "Twitter: <a href=\"https://twitter.com/#{@params[:twitter]}\" target=\"_blank\">https://twitter.com/#{@params[:twitter]}</a>"
+  end
+
+  def mastodon_url
+    return nil if @params[:mastodon].blank?
+
+    "Mastodon: #{@params[:mastodon]}"
   end
 
   def github_url
