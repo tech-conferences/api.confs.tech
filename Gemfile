@@ -10,7 +10,7 @@ end
 gem 'administrate', '~> 0.15.0'
 gem 'algolia', '~> 2.0.4'
 gem 'chronic'
-gem 'loofah', '~> 2.3.1'
+gem 'loofah', '~> 2.19.1'
 gem 'pg'
 gem 'puma', '~> 5.6.4'
 gem 'rails', '~> 6.1.3'
