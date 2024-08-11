@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - 3.0.0
+  - 3.2.0
 services:
   - postgresql
 
