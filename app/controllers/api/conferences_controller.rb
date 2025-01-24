@@ -103,9 +103,10 @@ class Api::ConferencesController < ApiController
       :cocUrl,
       :cfpUrl,
       :cfpEndDate,
-      :twitter,
-      :github,
+      :bluesky,
       :mastodon,
+      :github,
+      :twitter,
       topics: []
     ).to_h
   end
