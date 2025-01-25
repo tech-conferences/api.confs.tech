@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2025_01_25_004559) do
     t.string "cfpStartDate"
     t.string "cfpEndDate"
     t.string "cfpUrl"
+    t.string "twitter"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "emails"
@@ -41,10 +42,9 @@ ActiveRecord::Schema.define(version: 2025_01_25_004559) do
     t.boolean "offersSignLanguageOrCC", default: false
     t.boolean "online", default: false
     t.string "locales"
-    t.string "bluesky"
     t.string "github"
     t.string "mastodon"
-    t.string "twitter"
+    t.string "bluesky"
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 
