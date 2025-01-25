@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_11_004559) do
+ActiveRecord::Schema.define(version: 2025_01_25_004559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2023_07_11_004559) do
     t.string "locales"
     t.string "github"
     t.string "mastodon"
+    t.string "bluesky"
     t.index ["uuid"], name: "index_conferences_on_uuid", unique: true
   end
 
