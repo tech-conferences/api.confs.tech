@@ -14,7 +14,7 @@ gem 'loofah', '~> 2.3.1'
 gem 'pg'
 gem 'puma', '~> 5.6.4'
 gem 'rails', '~> 6.1.7.8'
-gem 'sidekiq', '~> 4.1.3'
+gem 'sidekiq', '~> 6.5.10'
 gem 'simple_command'
 gem 'twitter', '~> 7.0.0'
 
