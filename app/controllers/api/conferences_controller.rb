@@ -1,10 +1,23 @@
 require 'rss'
+require_relative '../../services/conference/scraper_service'
 
 class Api::ConferencesController < ApiController
   skip_before_action :authenticate_request
   before_action :validate_topics, only: :create
   before_action :validate_params, only: :create
 
+  def scrape
+    url = params[:url]
+    unless url.present?
+      render json: { error: 'URL missing' }, status: :bad_request and return
+    end
+    result = ConferenceScraper::ScraperService.scrape(url)
+    if result[:error]
+      render json: { error: result[:error] }, status: :unprocessable_entity
+    else
+      render json: result
+    end
+  end
   def index
     @conferences = Conference.first(limit)
     rss = RSS::Maker.make('2.0') do |maker|
