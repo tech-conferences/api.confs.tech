@@ -7,8 +7,8 @@ class Topic < ApplicationRecord
       find_by(name: 'javascript')
     when 'scala', 'groovy'
       find_by(name: 'java')
+    else
+      nil
     end
-
-    nil
   end
 end

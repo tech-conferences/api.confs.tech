@@ -1,3 +1,5 @@
+require_relative '../../lib/url_helper'
+
 class Conference < ApplicationRecord
   include ActiveModel::Dirty
   include DateConcern
@@ -16,6 +18,12 @@ class Conference < ApplicationRecord
   validates :name, :url, :startDate, presence: true
   validates :uuid, uniqueness: { case_sensitive: true }
   before_validation :set_uuid, :fix_url
+
+  def fix_url
+    self.url = URLHelper.fix_url(url) if url.present?
+    self.cfpUrl = URLHelper.fix_url(cfpUrl) if cfpUrl.present?
+    self.cocUrl = URLHelper.fix_url(cocUrl) if cocUrl.present?
+  end
 
   before_save :add_related_topic
   before_save :update_start_end_dates
@@ -157,12 +165,6 @@ class Conference < ApplicationRecord
     end
   end
 
-  def fix_url
-    self.url = URLHelper.fix_url(url) if url.present?
-    self.cfpUrl = URLHelper.fix_url(cfpUrl) if cfpUrl.present?
-    self.cocUrl = URLHelper.fix_url(cocUrl) if cocUrl.present?
-  end
-
   def algolia_index
     SyncConferenceService.new(self).add if Rails.env.production?
   end
@@ -182,6 +184,9 @@ class Conference < ApplicationRecord
 
   def add_related_topic
     related_topics = topics.map { |topic| Topic.related_topic(topic) }.compact.uniq
+    related_topics.each do |related_topic|
+      self.topics << related_topic unless self.topics.include?(related_topic)
+    end
     return if related_topics.empty?
 
     self.topics = topics | related_topics

@@ -10,10 +10,10 @@ end
 gem 'administrate', '~> 0.20.1'
 gem 'algolia', '~> 2.0.4'
 gem 'chronic'
-gem 'loofah', '~> 2.3.1'
+gem 'loofah', '~> 2.21'
 gem 'pg'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 6.1.7.8'
+gem 'rails', '~> 7.1.3'
 gem 'sidekiq', '~> 6.5.10'
 gem 'simple_command'
 gem 'twitter', '~> 7.0.0'
@@ -40,7 +40,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'jwt'
 
 group :test do
-  gem 'mocha', '1.7.0', require: false
+  gem 'mocha', '~> 2.0', require: false
   gem 'webmock'
 end
 
