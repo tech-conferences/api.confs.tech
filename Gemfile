@@ -8,12 +8,12 @@ git_source(:github) do |repo_name|
 end
 
 gem 'administrate', '~> 0.20.1'
-gem 'algolia', '~> 2.0.4'
+gem 'algolia', '~> 3.35.0'
 gem 'chronic'
 gem 'loofah', '~> 2.3.1'
 gem 'pg'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 6.1.7.8'
+gem 'rails', '~> 6.1.7.10'
 gem 'sidekiq', '~> 4.1.3'
 gem 'simple_command'
 gem 'twitter', '~> 7.0.0'
