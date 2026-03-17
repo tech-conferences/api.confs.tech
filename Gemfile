@@ -13,7 +13,7 @@ gem 'chronic'
 gem 'loofah', '~> 2.3.1'
 gem 'pg'
 gem 'puma', '~> 5.6.4'
-gem 'rails', '~> 6.1.7.8'
+gem 'rails', '~> 7.0.10'
 gem 'sidekiq', '~> 4.1.3'
 gem 'simple_command'
 gem 'twitter', '~> 7.0.0'
@@ -24,7 +24,7 @@ gem 'uglifier'
 # Ruby toolkit for the GitHub API
 gem 'octokit', '~> 4.0'
 
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.3'
 gem 'watir', '~> 7.3.0'
 
 gem 'progress_bar', '~> 1.3.0'
