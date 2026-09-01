@@ -32,6 +32,7 @@ class Conference::CreationService < ApplicationService
     params.delete(:bluesky) if params[:bluesky].blank?
     params.delete(:mastodon) if params[:mastodon].blank?
     params.delete(:twitter) if params[:twitter].blank? || params[:twitter] == '@'
+    params.delete(:discountCode) if params[:discountCode].blank?
 
     params[:name] = sanatize_name(params[:name])
     params[:country] = CountrySanatizerService.run!(params[:country]) if params[:country].present?
