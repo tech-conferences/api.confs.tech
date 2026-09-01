@@ -107,6 +107,7 @@ class Api::ConferencesController < ApiController
       :mastodon,
       :github,
       :twitter,
+      :discountCode,
       topics: []
     ).to_h
   end
